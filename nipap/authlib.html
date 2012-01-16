@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Authentication library &mdash; NIPAP v1.0 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="next" title="pynipap - a Python NIPAP client library" href="pynipap.html" />
+    <link rel="prev" title="XML-RPC glue class" href="xmlrpc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pynipap.html" title="pynipap - a Python NIPAP client library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="xmlrpc.html" title="XML-RPC glue class"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-nipap.authlib"></span><div class="section" id="authentication-library">
+<h1>Authentication library<a class="headerlink" href="#authentication-library" title="Permalink to this headline">¶</a></h1>
+<p>A base authentication &amp; authorization (not yet implemented) module.</p>
+<p>Includes the base class BaseAuth.</p>
+<div class="section" id="authentication-and-authorization-in-nipap">
+<h2>Authentication and authorization in NIPAP<a class="headerlink" href="#authentication-and-authorization-in-nipap" title="Permalink to this headline">¶</a></h2>
+<p>Due to the way NIPAP is thought to be used a somewhat involved
+authentication model has been implemented, but fear not! If the extra
+features not are needed, much of the complexity can be ignored.</p>
+<p>Even though NIPAP does not yet support authorization, all users can perform
+all operations, there are two classes of users: trusted and not trusted.
+What differ between trusted and non-trusted users is that a thusted user
+can perform operations which will be logged as performed by another user.
+This feature is thought to be used by NIPAP clients which have their own
+means of authenticating users; say for example a web application supporting
+the NTLM single sign-on feature. By letting the web application use a
+trusted account to authenticate against the NIPAP server, it can specify a
+user who will be listed as responsible for the changes made different from
+the account used to authenticate the backend queries.</p>
+<p>The NIPAP authentication system also has a concept of authoritative source.
+The authoritative source is a string which defines what system made the
+last change to a prefix. Well-behaved clients SHOULD present a warning to
+the user when trying to alter a prefix with an authoritative source
+different than the system itself, as other system might depend on the
+information being unchanged. This is, however, by no means enforced by the
+NIPAP service.</p>
+</div>
+<div class="section" id="authentication-backends">
+<h2>Authentication backends<a class="headerlink" href="#authentication-backends" title="Permalink to this headline">¶</a></h2>
+<p>Two authentication backends are shipped with NIPAP:</p>
+<ul class="simple">
+<li>LdapAuth - authenticates users against an LDAP server</li>
+<li>SqliteAuth - authenticates users against a local SQLite-database</li>
+</ul>
+<p>The authentication classes presented here are used both in the NIPAP web UI
+and in the XML-RPC backend. So far only the SqliteAuth backend supports
+trusted users.</p>
+<p>What authentication backend to use can be specified by suffixing the
+username with &#64;`backend`, where <cite>backend</cite> is set in the configuration file.
+If not defined, a (configurable) default backend is used.</p>
+</div>
+<div class="section" id="authentication-options">
+<h2>Authentication options<a class="headerlink" href="#authentication-options" title="Permalink to this headline">¶</a></h2>
+<p>With each NIPAP query authentication options can be specified. The
+authentication options are passed as a dict with the following keys taken
+into account:</p>
+<ul class="simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">authoritative_source</span></tt> - Authoritative source for the query.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">username</span></tt> - Username to impersonate, requires authentication as         trusted user.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">full_name</span></tt> - Full name of impersonated user.</li>
+</ul>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="nipap.authlib.AuthError">
+<em class="property">exception </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">AuthError</tt><a class="headerlink" href="#nipap.authlib.AuthError" title="Permalink to this definition">¶</a></dt>
+<dd><p>General auth exception.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nipap.authlib.AuthFactory">
+<em class="property">class </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">AuthFactory</tt><a class="headerlink" href="#nipap.authlib.AuthFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>An factory for authentication backends.</p>
+<dl class="method">
+<dt id="nipap.authlib.AuthFactory.get_auth">
+<tt class="descname">get_auth</tt><big>(</big><em>username</em>, <em>password</em>, <em>authoritative_source</em>, <em>auth_options={}</em><big>)</big><a class="headerlink" href="#nipap.authlib.AuthFactory.get_auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an authentication object.</p>
+<p>Examines the auth backend given after the &#8216;&#64;&#8217; in the username and
+returns a suitable instance of a subclass of the BaseAuth class.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>username</cite> [string]</dt>
+<dd><p class="first last">Username to authenticate as.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>password</cite> [string]</dt>
+<dd><p class="first last">Password to authenticate with.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>authoritative_source</cite> [string]</dt>
+<dd><p class="first last">Authoritative source of the query.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>auth_options</cite> [dict]</dt>
+<dd><p class="first last">A dict which, if authenticated as a trusted user, can override
+<cite>username</cite> and <cite>authoritative_source</cite>.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.authlib.AuthFactory.reload">
+<tt class="descname">reload</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.AuthFactory.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload AuthFactory.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="exception">
+<dt id="nipap.authlib.AuthenticationFailed">
+<em class="property">exception </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">AuthenticationFailed</tt><a class="headerlink" href="#nipap.authlib.AuthenticationFailed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authentication failed.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="nipap.authlib.AuthorizationFailed">
+<em class="property">exception </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">AuthorizationFailed</tt><a class="headerlink" href="#nipap.authlib.AuthorizationFailed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Authorization failed.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="nipap.authlib.BaseAuth">
+<em class="property">class </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">BaseAuth</tt><big>(</big><em>username</em>, <em>password</em>, <em>authoritative_source</em>, <em>auth_backend</em>, <em>auth_options={}</em><big>)</big><a class="headerlink" href="#nipap.authlib.BaseAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base authentication class.</p>
+<p>All authentication modules should extend this class.</p>
+<dl class="method">
+<dt id="nipap.authlib.BaseAuth.authenticate">
+<tt class="descname">authenticate</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.BaseAuth.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify authentication.</p>
+<p>Returns True/False dependant on whether the authentication
+succeeded or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.authlib.BaseAuth.authorize">
+<tt class="descname">authorize</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.BaseAuth.authorize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify authorization.</p>
+<p>Check if a user is authorized to perform a specific operation.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nipap.authlib.LdapAuth">
+<em class="property">class </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">LdapAuth</tt><big>(</big><em>name</em>, <em>username</em>, <em>password</em>, <em>authoritative_source</em>, <em>auth_options={}</em><big>)</big><a class="headerlink" href="#nipap.authlib.LdapAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>An authentication and authorization class for LDAP auth.</p>
+<dl class="method">
+<dt id="nipap.authlib.LdapAuth.authenticate">
+<tt class="descname">authenticate</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.LdapAuth.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify authentication.</p>
+<p>Returns True/False dependant on whether the authentication
+succeeded or not.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="nipap.authlib.SqliteAuth">
+<em class="property">class </em><tt class="descclassname">nipap.authlib.</tt><tt class="descname">SqliteAuth</tt><big>(</big><em>name</em>, <em>username</em>, <em>password</em>, <em>authoritative_source</em>, <em>auth_options={}</em><big>)</big><a class="headerlink" href="#nipap.authlib.SqliteAuth" title="Permalink to this definition">¶</a></dt>
+<dd><p>An authentication and authorization class for local auth.</p>
+<dl class="method">
+<dt id="nipap.authlib.SqliteAuth.add_user">
+<tt class="descname">add_user</tt><big>(</big><em>username</em>, <em>password</em>, <em>full_name=None</em>, <em>trusted=False</em><big>)</big><a class="headerlink" href="#nipap.authlib.SqliteAuth.add_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add user to SQLite database.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>username</cite> [string]</dt>
+<dd><p class="first last">Username of new user.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>password</cite> [string]</dt>
+<dd><p class="first last">Password of new user.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>full_name</cite> [string]</dt>
+<dd><p class="first last">Full name of new user.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>trusted</cite> [boolean]</dt>
+<dd><p class="first last">Whether the new user should be trusted or not.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.authlib.SqliteAuth.authenticate">
+<tt class="descname">authenticate</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.SqliteAuth.authenticate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Verify authentication.</p>
+<p>Returns True/False dependant on whether the authentication
+succeeded or not.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.authlib.SqliteAuth.list_users">
+<tt class="descname">list_users</tt><big>(</big><big>)</big><a class="headerlink" href="#nipap.authlib.SqliteAuth.list_users" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all users.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.authlib.SqliteAuth.remove_user">
+<tt class="descname">remove_user</tt><big>(</big><em>username</em><big>)</big><a class="headerlink" href="#nipap.authlib.SqliteAuth.remove_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove user from the SQLite database.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>username</cite> [string]</dt>
+<dd><p class="first last">Username of user to remove.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Authentication library</a><ul>
+<li><a class="reference internal" href="#authentication-and-authorization-in-nipap">Authentication and authorization in NIPAP</a></li>
+<li><a class="reference internal" href="#authentication-backends">Authentication backends</a></li>
+<li><a class="reference internal" href="#authentication-options">Authentication options</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="xmlrpc.html"
+                        title="previous chapter">XML-RPC glue class</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pynipap.html"
+                        title="next chapter">pynipap - a Python NIPAP client library</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="pynipap.html" title="pynipap - a Python NIPAP client library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="xmlrpc.html" title="XML-RPC glue class"
+             >previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
