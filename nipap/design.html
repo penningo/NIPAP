@@ -1,0 +1,193 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Design choices &mdash; NIPAP v1.0 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="next" title="NIPAP API" href="nipap.html" />
+    <link rel="prev" title="Neat IP-Address Planner" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nipap.html" title="NIPAP API"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Neat IP-Address Planner"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="design-choices">
+<h1>Design choices<a class="headerlink" href="#design-choices" title="Permalink to this headline">¶</a></h1>
+<p>This document tries to describe the overall design goals and decisions taken in
+the development process of NIPAP.</p>
+<p>Overall goals:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Simple to interact with for users and other systems alike, you should _want_
+to use it.</li>
+<li>Powerful, allowing the system to do things that are best performed by
+computers leaving human users happy.</li>
+<li>Easy to maintain. Tele2 does not have many developers so maintenance needs
+to be simple.</li>
+</ul>
+</div></blockquote>
+<p>Out of these goals, the following set of tools and resources have been chosen
+for the overall design.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Backend implemented using PostgreSQL</li>
+<li>Middleware / XML-RPC API in Python with the Twisted framework</li>
+<li>CLI client in Python</li>
+<li>Web GUI in Python using the Pyramid framework</li>
+</ul>
+</div></blockquote>
+<div class="section" id="why-postgresql">
+<h2>Why PostgreSQL?<a class="headerlink" href="#why-postgresql" title="Permalink to this headline">¶</a></h2>
+<p>Postgres has a native datatype called &#8216;inet&#8217; which is able to store both IPv4
+and IPv6 addresses and their prefix-length. The latter (IPv6) usually poses a
+problem to database storage as even long integers can only accomodate 64 bits.
+Hacks using two columns or some numeric type exist, but often result in
+cumbersome or slow solutions. Postgres inet type is indexable and using ip4r
+even ternary accesses (such as a longest prefix lookup) is indexable. This
+makes it a superior solution compared to most other databases.</p>
+<p>PostgreSQL is an open source database under a BSD license, meaning anyone can
+use it and modify it. Ingres development was started in the early 1970s and
+Postgres (Post Ingres) later evolved into PostgreSQL when the SQL language was
+added in 1995 as query language. It is the oldest and the most advanced open
+source relational database available today.</p>
+</div>
+<div class="section" id="why-python">
+<h2>Why Python?<a class="headerlink" href="#why-python" title="Permalink to this headline">¶</a></h2>
+<p>Python is a modern interpreted language with an easy to use syntax and plenty
+of powerful features. Experienced programmers usually pick up the language
+within a few days, less experienced within a slightly larger time. Its clean
+syntax makes it easy for people to familiarize themselves with the NIPAP
+codebase. In addition it offers the excellent networking framework Twisted
+which NIPAP heavily relies on for it&#8217;s API functionality.</p>
+</div>
+<div class="section" id="why-twisted">
+<h2>Why Twisted?<a class="headerlink" href="#why-twisted" title="Permalink to this headline">¶</a></h2>
+<p>Twisted is one of the leading concurrency frameworks allowing developers to
+focus on their own application instead of labour-intensive work surrounding it.
+It is used by companies such as Apple (iCal server) and Spotify (playlist
+service) to serve hundreds of thousands of users. Twisted includes modules for
+serving data over XML-RPC and/or SOAP as well as a complete toolset for
+asynchronous calls. For NIPAP, this means we write NIPAP code and not XML-RPC and
+concurrency code, as most of that is already complete.</p>
+</div>
+<div class="section" id="why-xml-rpc">
+<h2>Why XML-RPC?<a class="headerlink" href="#why-xml-rpc" title="Permalink to this headline">¶</a></h2>
+<p>From the very start, it was a important design goal that NIPAP remain open for
+interoperation with any and all other systems and so it would be centered
+around a small and simple API from which everything can be performed. Not
+intending to reinvent the wheel, especially given the plethora of already
+available APIs, it was up to chosing the &#8220;right one&#8221;. Twisted offers built-in
+support for SOAP (WebServices) as well as XML-RPC and given design goals such
+as simple, SOAP didn&#8217;t quite feel right and so XML-RPC was chosen. It should
+however be noted that NIPAPs XML-RPC protocol is a thin wrapper around an inner
+core and so exposing a SOAP interface in addition to XML-RPC can be easily
+achieved. XML-RPC shares a lot of similarities with SOAP but is very much less
+complex and it is possible for a human to read it in a tcpdump or similar while
+with SOAP one likely needs some interpreter or the brain of Albert Einstein.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Design choices</a><ul>
+<li><a class="reference internal" href="#why-postgresql">Why PostgreSQL?</a></li>
+<li><a class="reference internal" href="#why-python">Why Python?</a></li>
+<li><a class="reference internal" href="#why-twisted">Why Twisted?</a></li>
+<li><a class="reference internal" href="#why-xml-rpc">Why XML-RPC?</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Neat IP-Address Planner</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="nipap.html"
+                        title="next chapter">NIPAP API</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="nipap.html" title="NIPAP API"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Neat IP-Address Planner"
+             >previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

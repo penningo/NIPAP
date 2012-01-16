@@ -1,0 +1,501 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pynipap - a Python NIPAP client library &mdash; NIPAP v1.0 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="prev" title="Authentication library" href="authlib.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="authlib.html" title="Authentication library"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-pynipap"></span><div class="section" id="pynipap-a-python-nipap-client-library">
+<h1>pynipap - a Python NIPAP client library<a class="headerlink" href="#pynipap-a-python-nipap-client-library" title="Permalink to this headline">¶</a></h1>
+<p>pynipap is a Python client library for the NIPAP IP address planning
+system. It is structured as a simple ORM.</p>
+<p>There are three ORM-classes:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pynipap.Schema" title="pynipap.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.Pool" title="pynipap.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.Prefix" title="pynipap.Prefix"><tt class="xref py py-class docutils literal"><span class="pre">Prefix</span></tt></a></li>
+</ul>
+<p>Each of these maps to the NIPAP objects with the same name. See the main
+NIPAP API documentation for an overview of the different object types and
+what they are used for.</p>
+<p>There are also a few supporting classes:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pynipap.AuthOptions" title="pynipap.AuthOptions"><tt class="xref py py-class docutils literal"><span class="pre">AuthOptions</span></tt></a> - Authentication options.</li>
+</ul>
+<p>And a bunch of exceptions:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#pynipap.NipapError" title="pynipap.NipapError"><tt class="xref py py-class docutils literal"><span class="pre">NipapError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapNonExistentError" title="pynipap.NipapNonExistentError"><tt class="xref py py-class docutils literal"><span class="pre">NipapNonExistentError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapInputError" title="pynipap.NipapInputError"><tt class="xref py py-class docutils literal"><span class="pre">NipapInputError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapMissingInputError" title="pynipap.NipapMissingInputError"><tt class="xref py py-class docutils literal"><span class="pre">NipapMissingInputError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapExtraneousInputError" title="pynipap.NipapExtraneousInputError"><tt class="xref py py-class docutils literal"><span class="pre">NipapExtraneousInputError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapNoSuchOperatorError" title="pynipap.NipapNoSuchOperatorError"><tt class="xref py py-class docutils literal"><span class="pre">NipapNoSuchOperatorError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapValueError" title="pynipap.NipapValueError"><tt class="xref py py-class docutils literal"><span class="pre">NipapValueError</span></tt></a></li>
+<li><a class="reference internal" href="#pynipap.NipapDuplicateError" title="pynipap.NipapDuplicateError"><tt class="xref py py-class docutils literal"><span class="pre">NipapDuplicateError</span></tt></a></li>
+</ul>
+<div class="section" id="general-usage">
+<h2>General usage<a class="headerlink" href="#general-usage" title="Permalink to this headline">¶</a></h2>
+<p>pynipap has been designed to be very simple to use and rapid to get about using.</p>
+<div class="section" id="preparations">
+<h3>Preparations<a class="headerlink" href="#preparations" title="Permalink to this headline">¶</a></h3>
+<p>Make sure that pynipap is accessible in your <cite>sys.path</cite>, you can test it by
+starting a python shell and running:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pynipap</span>
+</pre></div>
+</div>
+<p>If that works, you are good to go!</p>
+<p>To simplify your code slightly, you can import the individual classes into
+your main namespace:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pynipap</span>
+<span class="kn">from</span> <span class="nn">pynipap</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">Prefix</span>
+</pre></div>
+</div>
+<p>Before you can access NIPAP you need to specify the URL to the NIPAP
+XML-RPC service and the authentication options to use for your connection.
+NIPAP has a authentication system which is somewhat involved, see the main
+NIPAP documentation.</p>
+<p>The URL, including the user credentials, is set in the pynipap module variable <cite>xmlrpc_uri</cite> as so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pynipap</span><span class="o">.</span><span class="n">xmlrpc_uri</span> <span class="o">=</span> <span class="s">&quot;http://user:pass@127.0.0.1:9002&quot;</span>
+</pre></div>
+</div>
+<p>The minimum authentication options which we need to set is the
+<cite>authoritative_source</cite> option, which specifies what system is accessing
+NIPAP. This is logged for each query which alters the NIPAP database and
+attached to each prefix which is created or edited. Well-behaved clients
+are required to honor this and verify that the user really want to alter
+the prefix, when trying to edit a prefix which last was edited by another
+system. The <a class="reference internal" href="#pynipap.AuthOptions" title="pynipap.AuthOptions"><tt class="xref py py-class docutils literal"><span class="pre">AuthOptions</span></tt></a> class is a class with a shared state,
+similar to a singleton class; that is, when a first instance is created
+each consecutive instances will be copies of the first one. In this way the
+authentication options can be accessed from all of the pynipap classes.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="n">AuthOptions</span><span class="p">({</span>
+        <span class="s">&#39;authoritative_source&#39;</span><span class="p">:</span> <span class="s">&#39;my_fancy_nipap_client&#39;</span> 
+    <span class="p">})</span>
+</pre></div>
+</div>
+<p>After this, we are good to go!</p>
+</div>
+<div class="section" id="accessing-data">
+<h3>Accessing data<a class="headerlink" href="#accessing-data" title="Permalink to this headline">¶</a></h3>
+<p>To fetch data from NIPAP, a set of static methods (&#64;classmethod) has been
+defined in each of the ORM classes. They are:</p>
+<ul class="simple">
+<li><tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt> - Get a single object from its ID.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">list()</span></tt> - List objects matching a simple criteria.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> - Perform a full-blown search.</li>
+<li><tt class="xref py py-func docutils literal"><span class="pre">smart_search()</span></tt> - Perform a magic search from a string.</li>
+</ul>
+<p>Each of these functions return either an instance of the requested class
+(<a class="reference internal" href="#pynipap.Schema" title="pynipap.Schema"><tt class="xref py py-class docutils literal"><span class="pre">Schema</span></tt></a>, <a class="reference internal" href="#pynipap.Pool" title="pynipap.Pool"><tt class="xref py py-class docutils literal"><span class="pre">Pool</span></tt></a>, <a class="reference internal" href="#pynipap.Prefix" title="pynipap.Prefix"><tt class="xref py py-class docutils literal"><span class="pre">Prefix</span></tt></a>) or a list of
+instances. The <tt class="xref py py-func docutils literal"><span class="pre">search()</span></tt> and <tt class="xref py py-func docutils literal"><span class="pre">smart_search()</span></tt> functions also
+embeds the lists in dicts which contain search meta data.</p>
+<p>The easiest way to get data out of NIPAP is to use the <tt class="xref py py-func docutils literal"><span class="pre">get()</span></tt>-method,
+given that you know the ID of the object you want to fetch:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Fetch schema with ID 1 and print its name</span>
+<span class="n">schema</span> <span class="o">=</span> <span class="n">Schema</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">schema</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>As all pools and prefixes are bound to a schema, all methods for fetching
+these need a schema object which is takes as a first function argument.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># list all pools in the schema</span>
+<span class="n">pools</span> <span class="o">=</span> <span class="n">Pool</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+
+<span class="c"># print the name of the pools</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pools</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>Each of the list functions can also take a <cite>spec</cite>-dict as a second
+argument. With the spec you can perform a simple search operation by
+specifying object attribute values.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># List pools with a default type of &#39;assignment&#39;</span>
+<span class="n">pools</span> <span class="o">=</span> <span class="n">Pool</span><span class="o">.</span><span class="n">list</span><span class="p">(</span><span class="n">schema</span><span class="p">,</span> <span class="p">{</span> <span class="s">&#39;default_type&#39;</span><span class="p">:</span> <span class="s">&#39;assignment&#39;</span> <span class="p">})</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="performing-searches">
+<h3>Performing searches<a class="headerlink" href="#performing-searches" title="Permalink to this headline">¶</a></h3>
+<p>Commin&#8217; up, commin&#8217; up.</p>
+</div>
+<div class="section" id="saving-changes">
+<h3>Saving changes<a class="headerlink" href="#saving-changes" title="Permalink to this headline">¶</a></h3>
+<p>Changes made to objects are not automatically saved. To save the changes,
+simply run the object&#8217;s <tt class="xref py py-func docutils literal"><span class="pre">save()</span></tt>-method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">schema</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Spam spam spam&quot;</span>
+<span class="n">schema</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="error-handling">
+<h2>Error handling<a class="headerlink" href="#error-handling" title="Permalink to this headline">¶</a></h2>
+<p>As is customary in Python applications, an error results in an exception
+being thrown. All pynipap exceptions extend the main exception
+<a class="reference internal" href="#pynipap.NipapError" title="pynipap.NipapError"><tt class="xref py py-class docutils literal"><span class="pre">NipapError</span></tt></a>. A goal with the pynipap library has been to make the
+XML-RPC-channel to the backend as transparent as possible, so the XML-RPC
+Faults which the NIPAP server returns in case of errors are converted and
+re-thrown as new exceptions which also they extend <a class="reference internal" href="#pynipap.NipapError" title="pynipap.NipapError"><tt class="xref py py-class docutils literal"><span class="pre">NipapError</span></tt></a>,
+for example the NipapDuplicateError which is thrown when a duplicate key
+error occurs in NIPAP.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="pynipap.AuthOptions">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">AuthOptions</tt><big>(</big><em>options=None</em><big>)</big><a class="headerlink" href="#pynipap.AuthOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A global-ish authentication option container.</p>
+<p>Note that this essentially is a global variable. If you handle multiple
+queries from different users, you need to make sure that the
+AuthOptions-instances are set to the current user&#8217;s.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapDuplicateError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapDuplicateError</tt><a class="headerlink" href="#pynipap.NipapDuplicateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A duplicate entry was encountered</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapError</tt><a class="headerlink" href="#pynipap.NipapError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A generic NIPAP model exception.</p>
+<p>All errors thrown from the NIPAP model extends this exception.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapExtraneousInputError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapExtraneousInputError</tt><a class="headerlink" href="#pynipap.NipapExtraneousInputError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extraneous input</p>
+<p>Most input is passed in dicts, this could mean an unknown key in a dict.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapInputError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapInputError</tt><a class="headerlink" href="#pynipap.NipapInputError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something wrong with the input we received</p>
+<p>A general case.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapMissingInputError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapMissingInputError</tt><a class="headerlink" href="#pynipap.NipapMissingInputError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Missing input</p>
+<p>Most input is passed in dicts, this could mean a missing key in a dict.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapNoSuchOperatorError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapNoSuchOperatorError</tt><a class="headerlink" href="#pynipap.NipapNoSuchOperatorError" title="Permalink to this definition">¶</a></dt>
+<dd><p>A non existent operator was specified.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapNonExistentError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapNonExistentError</tt><a class="headerlink" href="#pynipap.NipapNonExistentError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thrown when something can not be found.</p>
+<p>For example when a given ID can not be found in the NIPAP database.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pynipap.NipapValueError">
+<em class="property">exception </em><tt class="descclassname">pynipap.</tt><tt class="descname">NipapValueError</tt><a class="headerlink" href="#pynipap.NipapValueError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Something wrong with a value we have</p>
+<p>For example, trying to send an integer when an IP address is expected.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pynipap.Pool">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">Pool</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#pynipap.Pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>An address pool.</p>
+<dl class="classmethod">
+<dt id="pynipap.Pool.from_dict">
+<em class="property">classmethod </em><tt class="descname">from_dict</tt><big>(</big><em>parm</em><big>)</big><a class="headerlink" href="#pynipap.Pool.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new Pool-object from dict.</p>
+<p>Suitable for creating objects from XML-RPC data.
+All available keys must exist.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Pool.get">
+<em class="property">classmethod </em><tt class="descname">get</tt><big>(</big><em>schema</em>, <em>id</em><big>)</big><a class="headerlink" href="#pynipap.Pool.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the pool with id &#8216;id&#8217;.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Pool.list">
+<em class="property">classmethod </em><tt class="descname">list</tt><big>(</big><em>schema</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#pynipap.Pool.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List pools.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Pool.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Pool.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove pool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Pool.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Pool.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save changes made to pool to NIPAP.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Pool.search">
+<em class="property">classmethod </em><tt class="descname">search</tt><big>(</big><em>schema</em>, <em>query</em>, <em>search_opts={}</em><big>)</big><a class="headerlink" href="#pynipap.Pool.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search pools.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Pool.smart_search">
+<em class="property">classmethod </em><tt class="descname">smart_search</tt><big>(</big><em>schema</em>, <em>query_string</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#pynipap.Pool.smart_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart pool search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pynipap.Prefix">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">Prefix</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#pynipap.Prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>A prefix.</p>
+<dl class="classmethod">
+<dt id="pynipap.Prefix.find_free">
+<em class="property">classmethod </em><tt class="descname">find_free</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Prefix.find_free" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds a free prefix.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Prefix.from_dict">
+<em class="property">classmethod </em><tt class="descname">from_dict</tt><big>(</big><em>pref</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a Prefix object from a dict.</p>
+<p>Suitable for creating Prefix objects from XML-RPC input.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Prefix.get">
+<em class="property">classmethod </em><tt class="descname">get</tt><big>(</big><em>schema</em>, <em>id</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the prefix with id &#8216;id&#8217;.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Prefix.list">
+<em class="property">classmethod </em><tt class="descname">list</tt><big>(</big><em>schema</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List prefixes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Prefix.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Prefix.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove the prefix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Prefix.save">
+<tt class="descname">save</tt><big>(</big><em>args={}</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save prefix to PYNIPAP.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Prefix.search">
+<em class="property">classmethod </em><tt class="descname">search</tt><big>(</big><em>schema</em>, <em>query</em>, <em>search_opts</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for prefixes.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Prefix.smart_search">
+<em class="property">classmethod </em><tt class="descname">smart_search</tt><big>(</big><em>schema</em>, <em>query_string</em>, <em>search_options</em><big>)</big><a class="headerlink" href="#pynipap.Prefix.smart_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart prefix search.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pynipap.Pynipap">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">Pynipap</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#pynipap.Pynipap" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base class for the pynipap model classes.</p>
+<p>All Pynipap classes which maps to data in NIPAP (:py:class:Schema,
+:py:class:Pool, :py:class:Prefix) extends this class.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="pynipap.Schema">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">Schema</tt><big>(</big><em>id=None</em><big>)</big><a class="headerlink" href="#pynipap.Schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>A schema.</p>
+<dl class="attribute">
+<dt id="pynipap.Schema.description">
+<tt class="descname">description</tt><a class="headerlink" href="#pynipap.Schema.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>Schema description, as a string.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Schema.from_dict">
+<em class="property">classmethod </em><tt class="descname">from_dict</tt><big>(</big><em>parm</em><big>)</big><a class="headerlink" href="#pynipap.Schema.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create new Schema-object from dict.</p>
+<p>Suitable for creating objects from XML-RPC data.
+All available keys must exist.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Schema.get">
+<em class="property">classmethod </em><tt class="descname">get</tt><big>(</big><em>id</em><big>)</big><a class="headerlink" href="#pynipap.Schema.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the schema with id &#8216;id&#8217;.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Schema.list">
+<em class="property">classmethod </em><tt class="descname">list</tt><big>(</big><em>spec={}</em><big>)</big><a class="headerlink" href="#pynipap.Schema.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List schemas.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynipap.Schema.name">
+<tt class="descname">name</tt><a class="headerlink" href="#pynipap.Schema.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>The name of the schema, as a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Schema.remove">
+<tt class="descname">remove</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Schema.remove" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove schema.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pynipap.Schema.save">
+<tt class="descname">save</tt><big>(</big><big>)</big><a class="headerlink" href="#pynipap.Schema.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save changes made to object to NIPAP.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Schema.search">
+<em class="property">classmethod </em><tt class="descname">search</tt><big>(</big><em>query</em>, <em>search_opts={}</em><big>)</big><a class="headerlink" href="#pynipap.Schema.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search schemas.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="pynipap.Schema.smart_search">
+<em class="property">classmethod </em><tt class="descname">smart_search</tt><big>(</big><em>query_string</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#pynipap.Schema.smart_search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart schema search.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pynipap.Schema.vrf">
+<tt class="descname">vrf</tt><a class="headerlink" href="#pynipap.Schema.vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>VRF where the schema&#8217;s addresses reside. A string.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="pynipap.XMLRPCConnection">
+<em class="property">class </em><tt class="descclassname">pynipap.</tt><tt class="descname">XMLRPCConnection</tt><a class="headerlink" href="#pynipap.XMLRPCConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles a shared XML-RPC connection.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">pynipap - a Python NIPAP client library</a><ul>
+<li><a class="reference internal" href="#general-usage">General usage</a><ul>
+<li><a class="reference internal" href="#preparations">Preparations</a></li>
+<li><a class="reference internal" href="#accessing-data">Accessing data</a></li>
+<li><a class="reference internal" href="#performing-searches">Performing searches</a></li>
+<li><a class="reference internal" href="#saving-changes">Saving changes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#error-handling">Error handling</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="authlib.html"
+                        title="previous chapter">Authentication library</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="authlib.html" title="Authentication library"
+             >previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
