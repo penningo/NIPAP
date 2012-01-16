@@ -1,0 +1,730 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>XML-RPC glue class &mdash; NIPAP v1.0 documentation</title>
+    <link rel="stylesheet" href="static/default.css" type="text/css" />
+    <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="static/jquery.js"></script>
+    <script type="text/javascript" src="static/underscore.js"></script>
+    <script type="text/javascript" src="static/doctools.js"></script>
+    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="next" title="Authentication library" href="authlib.html" />
+    <link rel="prev" title="NIPAP API" href="nipap.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="authlib.html" title="Authentication library"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="nipap.html" title="NIPAP API"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <span class="target" id="module-nipap.xmlrpc"></span><div class="section" id="xml-rpc-glue-class">
+<h1>XML-RPC glue class<a class="headerlink" href="#xml-rpc-glue-class" title="Permalink to this headline">¶</a></h1>
+<p>This module contains a &#8220;glue class&#8221; used by Twisted to export the NIPAP API
+functions over XML-RPC.</p>
+<p>Each function call takes only one argument, an XML-RPC struct which
+contains the function arguments which are passed on to the
+<tt class="xref py py-class docutils literal"><span class="pre">Nipap</span></tt>-class.</p>
+<p>For a detailed description of the API functions, see <a class="reference internal" href="nipap.html"><em>NIPAP API</em></a>.</p>
+<div class="section" id="authentication">
+<h2>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h2>
+<p>Authentication is implemented using basic HTTP authentication. The user
+credentials are passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt> class together with the
+(optional) auth argument from the arguments-dict. If the authentication
+fails a HTTP 401 is returned.</p>
+<p>See the <a class="reference internal" href="authlib.html"><em>Authentication library</em></a> documentation for a detailed explanation of how the
+authentication system works.</p>
+</div>
+<div class="section" id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="nipap.xmlrpc.NipapProtocol">
+<em class="property">class </em><tt class="descclassname">nipap.xmlrpc.</tt><tt class="descname">NipapProtocol</tt><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Class to allow XML-RPC access to the lovely NIPAP system.</p>
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool">
+<tt class="descname">xmlrpc_add_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a pool.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Attributes which will be set on the new pool.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns ID of created pool.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_prefix">
+<tt class="descname">xmlrpc_add_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a prefix.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Attributes to set on the new prefix.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>args</cite> [srgs]</dt>
+<dd><p class="first last">Arguments for addition of prefix, such as what pool or prefix
+it should be allocated from.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns ID of created prefix.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_schema">
+<tt class="descname">xmlrpc_add_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new network schema.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Schema attributes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns the schema ID.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_echo">
+<tt class="descname">xmlrpc_echo</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_echo" title="Permalink to this definition">¶</a></dt>
+<dd><p>An echo function</p>
+<p>An API test function which simply echoes what is is passed in the
+&#8216;message&#8217; element in the args-dict..</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>message</cite> [string]</dt>
+<dd><p class="first last">String to echo.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool">
+<tt class="descname">xmlrpc_edit_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit pool.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>pool</cite> [struct]</dt>
+<dd><p class="first last">Specifies pool attributes to match.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Pool attributes to set.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_prefix">
+<tt class="descname">xmlrpc_edit_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit prefix.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>prefix</cite> [struct]</dt>
+<dd><p class="first last">Prefix attributes which describes what prefix(es) to edit.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Attribuets to set on the new prefix.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_schema">
+<tt class="descname">xmlrpc_edit_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit a schema.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">A schema spec specifying which schema(s) to edit.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">Schema attributes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_find_free_prefix">
+<tt class="descname">xmlrpc_find_free_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_find_free_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find a free prefix.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>args</cite> [struct]</dt>
+<dd><p class="first last">Arguments for the find_free_prefix-function such as what prefix
+or pool to allocate from.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_pool">
+<tt class="descname">xmlrpc_list_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>List pools.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>pool</cite> [struct]</dt>
+<dd><p class="first last">Specifies pool attributes which will be matched.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a list of structs describing the matching pools.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_prefix">
+<tt class="descname">xmlrpc_list_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>List prefixes.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>prefix</cite> [struct]</dt>
+<dd><p class="first last">Prefix attributes to match.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a list of structs describing the matching prefixes.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_schema">
+<tt class="descname">xmlrpc_list_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>List schemas.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Specifies schema attributes to match (optional).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a list of structs matching the schema spec.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_pool">
+<tt class="descname">xmlrpc_remove_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a pool.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>pool</cite> [struct]</dt>
+<dd><p class="first last">Specifies what pool(s) to remove.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_prefix">
+<tt class="descname">xmlrpc_remove_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a prefix.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>prefix</cite> [struct]</dt>
+<dd><p class="first last">Attributes used to select what prefix to remove.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_schema">
+<tt class="descname">xmlrpc_remove_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a schema.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">A schema spec.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_pool">
+<tt class="descname">xmlrpc_search_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for pools.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [struct]</dt>
+<dd><p class="first last">A struct specifying the search query.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result and the search options
+used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_prefix">
+<tt class="descname">xmlrpc_search_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for prefixes.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [struct]</dt>
+<dd><p class="first last">A struct specifying the search query.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing the search result together with the
+search options used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_schema">
+<tt class="descname">xmlrpc_search_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for schemas.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [struct]</dt>
+<dd><p class="first last">A struct specifying the search query.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result and the search options
+used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool">
+<tt class="descname">xmlrpc_smart_search_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [string]</dt>
+<dd><p class="first last">The search string.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result, interpretation of the
+query string and the search options used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_prefix">
+<tt class="descname">xmlrpc_smart_search_prefix</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>schema</cite> [struct]</dt>
+<dd><p class="first last">Schema to work in.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [string]</dt>
+<dd><p class="first last">The search string.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result, interpretation of the
+query string and the search options used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_schema">
+<tt class="descname">xmlrpc_smart_search_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_schema" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query_string</cite> [string]</dt>
+<dd><p class="first last">The search string.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result, interpretation of the
+search string and the search options used.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">XML-RPC glue class</a><ul>
+<li><a class="reference internal" href="#authentication">Authentication</a></li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="nipap.html"
+                        title="previous chapter">NIPAP API</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="authlib.html"
+                        title="next chapter">Authentication library</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="authlib.html" title="Authentication library"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="nipap.html" title="NIPAP API"
+             >previous</a> |</li>
+        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
