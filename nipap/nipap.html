@@ -143,8 +143,8 @@ Host; prefix of max length within an assigment, assigned to an end host.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><tt class="xref py py-attr docutils literal"><span class="pre">display</span></tt> - Only set by the <tt class="xref py py-func docutils literal"><span class="pre">search_prefix()</span></tt> and</dt>
-<dd><p class="first last"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_prefix()</span></tt> functions, see their documentation for
+<dt><tt class="xref py py-attr docutils literal"><span class="pre">display</span></tt> - Only set by the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" title="nipap.nipap.Nipap.search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">search_prefix()</span></tt></a> and</dt>
+<dd><p class="first last"><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_prefix" title="nipap.nipap.Nipap.smart_search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_prefix()</span></tt></a> functions, see their documentation for
 explanation.</p>
 </dd>
 </dl>
@@ -741,9 +741,14 @@ compare the pool attribute to, or an entire <cite>query</cite> dict.</p>
 </div>
 <p>The search options can also be used to limit the number of rows
 returned or set an offset for the result.</p>
-<p>The following options are available:
-* <tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of pools to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).
-* <tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many pools (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</p>
+<dl class="docutils">
+<dt>The following options are available:</dt>
+<dd><ul class="first last simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of pools to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many pools (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -841,13 +846,18 @@ prefix(es) matching the search terms (parents) or the prefixes
 which are contained by the prefix(es) matching the search terms.
 The search options can also be used to limit the number of rows
 returned.</p>
-<p>The following options are available:
-* <tt class="xref py py-attr docutils literal"><span class="pre">parents_depth</span></tt> - How many levels of parents to return. Set to <tt class="xref py py-data docutils literal"><span class="pre">-1</span></tt> to include all parents.
-* <tt class="xref py py-attr docutils literal"><span class="pre">children_depth</span></tt> - How many levels of children to return. Set to <tt class="xref py py-data docutils literal"><span class="pre">-1</span></tt> to include all children.
-* <tt class="xref py py-attr docutils literal"><span class="pre">include_all_parents</span></tt> - Include all parents, no matter what depth is specified.
-* <tt class="xref py py-attr docutils literal"><span class="pre">include_all_children</span></tt> - Include all children, no matter what depth is specified.
-* <tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of prefixes to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).
-* <tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many prefixes (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</p>
+<dl class="docutils">
+<dt>The following options are available:</dt>
+<dd><ul class="first last simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">parents_depth</span></tt> - How many levels of parents to return. Set to <tt class="xref py py-data docutils literal"><span class="pre">-1</span></tt> to include all parents.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">children_depth</span></tt> - How many levels of children to return. Set to <tt class="xref py py-data docutils literal"><span class="pre">-1</span></tt> to include all children.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">include_all_parents</span></tt> - Include all parents, no matter what depth is specified.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">include_all_children</span></tt> - Include all children, no matter what depth is specified.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of prefixes to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many prefixes (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</li>
+</ul>
+</dd>
+</dl>
 <p>The options above gives the possibility to specify how many levels
 of parent and child prefixes to return in addition to the prefixes
 that actually matched the search terms. This is done by setting the
@@ -944,9 +954,14 @@ compare the prefix attribute to, or an entire <cite>query</cite> dict.</p>
 </div>
 <p>The search options can also be used to limit the number of rows
 returned or set an offset for the result.</p>
-<p>The following options are available:
-* <tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of prefixes to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).
-* <tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many prefixes (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</p>
+<dl class="docutils">
+<dt>The following options are available:</dt>
+<dd><ul class="first last simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of prefixes to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many prefixes (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
