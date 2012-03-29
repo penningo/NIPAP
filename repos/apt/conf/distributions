@@ -1,0 +1,8 @@
+Origin: NIPAP
+Label: NIPAP
+Suite: stable
+Codename: stable
+Version: 3.1
+Architectures: i386 amd64 source
+Components: main
+Description: Official NIPAP apt repository
