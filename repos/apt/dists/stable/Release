@@ -1,0 +1,39 @@
+Origin: NIPAP
+Label: NIPAP
+Suite: stable
+Codename: stable
+Version: 3.1
+Date: Fri, 30 Mar 2012 21:42:19 UTC
+Architectures: i386 amd64
+Components: main
+Description: Official NIPAP apt repository
+MD5Sum:
+ 791c8cb7f77b5048fc0464efcd05f9cc 3186 main/binary-i386/Packages
+ 9fcaea9211866aa3e6b0698067160ecc 1227 main/binary-i386/Packages.gz
+ 12c51ecfd1b0b8607ba244368eb7e5ad 134 main/binary-i386/Release
+ 791c8cb7f77b5048fc0464efcd05f9cc 3186 main/binary-amd64/Packages
+ 9fcaea9211866aa3e6b0698067160ecc 1227 main/binary-amd64/Packages.gz
+ 9e6504fdd13b8cba8b5392c77e6c48a5 135 main/binary-amd64/Release
+ b4eeab2725b6da845d768c447eb45ed6 4411 main/source/Sources
+ 0067f43fd328895aee3a7e0009ac3342 1649 main/source/Sources.gz
+ 6bc8b503efc5d59262fa16396dc85a1d 136 main/source/Release
+SHA1:
+ 3f9d11ab1661133424ee419115f6ffd1f566a516 3186 main/binary-i386/Packages
+ c636668b74d7fb8f518ab2b8f9c0dbefb7dca2b6 1227 main/binary-i386/Packages.gz
+ ac20881db33ee42739a01356d28286cd8b6ab0c2 134 main/binary-i386/Release
+ 3f9d11ab1661133424ee419115f6ffd1f566a516 3186 main/binary-amd64/Packages
+ c636668b74d7fb8f518ab2b8f9c0dbefb7dca2b6 1227 main/binary-amd64/Packages.gz
+ dd5e9af05285b6706c2113f0a2df10c104191aae 135 main/binary-amd64/Release
+ 3c98bdef06c8fda8783c0322ae0bf04d5cedc6ea 4411 main/source/Sources
+ c9c8a438d4c3b358409d4fdecdf703fd552712de 1649 main/source/Sources.gz
+ f7e2c00d6713ba05cdcba6a4b536bc8436bef486 136 main/source/Release
+SHA256:
+ 5ded968fcd70a59374081669cd915705ebe7f40edacc15929acc11f3fa9f1a87 3186 main/binary-i386/Packages
+ 05270b27f994a685dc6ffd6130fd8b6f139412e6c034449e9312b33640c571b9 1227 main/binary-i386/Packages.gz
+ f972467112bacca49d100ca104741efa1753e8f9618e921ed72b0f16e2cbd4a9 134 main/binary-i386/Release
+ 5ded968fcd70a59374081669cd915705ebe7f40edacc15929acc11f3fa9f1a87 3186 main/binary-amd64/Packages
+ 05270b27f994a685dc6ffd6130fd8b6f139412e6c034449e9312b33640c571b9 1227 main/binary-amd64/Packages.gz
+ 6883ccc01e722312162be37936df54ea1398619233ba92880d90c8d055d8fce7 135 main/binary-amd64/Release
+ d9c60999d30d052510752b23dfcbfe473fb5ad0ad685630912a5b202835c094e 4411 main/source/Sources
+ e66af30b2c9823c8ac756d478c8088b6c082a8ba5043a38eb04310ce30f7a66e 1649 main/source/Sources.gz
+ 6afbbe4641f386acf753bdd688a3bc863e5e59be2e3bd3a0a5d9b628fccfe4cf 136 main/source/Release
