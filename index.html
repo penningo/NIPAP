@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<title>NIPAP - the Neat IP Address Planner</title>
@@ -23,7 +22,11 @@
 				<p>Start by looking at some <a href="screenshots.html">screenshots of the gorgeous web interface</a>.</p>
 
 				<h2>Getting it</h2>
+				<p>If you are running Debian or Ubuntu, try using our repo by adding the following to /etc/apt/sources.list.d/nipap.list:<br/>
+				deb http://spritelink.github.com/NIPAP/repos/apt stable main
+				</p>
 				<p>NIPAP is hosted at GitHub. You will find the source together with issue tracking <a href="https://www.github.com/SpriteLink/NIPAP">here</a>. NIPAP is easily built into Debian packages by standard Python and Debian tools, check out README.dev and the Makefile in the root directory.</p>
+				<p>Do note how NIPAP depends on a new version of the ip4r addon for PostgreSQL. It is currently only available through <a href="http://pgfoundry.org/projects/ip4r/">CVS</a>.</p>
 
 				<h2>Documentation</h2>
 				<p>The source code of NIPAP is not overly complex and is fairly well documented making it overall rather easy to understand. Sphinx is used to generate pretty HTML pages directly from the source code which you can find at the following link:</p>
