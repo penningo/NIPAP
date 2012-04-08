@@ -3,37 +3,64 @@ Label: NIPAP
 Suite: stable
 Codename: stable
 Version: 3.1
-Date: Mon, 02 Apr 2012 08:27:23 UTC
+Date: Sun, 08 Apr 2012 18:02:08 UTC
 Architectures: i386 amd64
-Components: main
+Components: main extra
 Description: Official NIPAP apt repository
 MD5Sum:
- 0a2162093e9d22e236f06d87b6e00c57 4427 main/binary-i386/Packages
- d5ce02011e323f4c9504489d9a14afdf 1733 main/binary-i386/Packages.gz
+ 791c8cb7f77b5048fc0464efcd05f9cc 3186 main/binary-i386/Packages
+ 9fcaea9211866aa3e6b0698067160ecc 1227 main/binary-i386/Packages.gz
  12c51ecfd1b0b8607ba244368eb7e5ad 134 main/binary-i386/Release
- 0a2162093e9d22e236f06d87b6e00c57 4427 main/binary-amd64/Packages
- d5ce02011e323f4c9504489d9a14afdf 1733 main/binary-amd64/Packages.gz
+ 791c8cb7f77b5048fc0464efcd05f9cc 3186 main/binary-amd64/Packages
+ 9fcaea9211866aa3e6b0698067160ecc 1227 main/binary-amd64/Packages.gz
  9e6504fdd13b8cba8b5392c77e6c48a5 135 main/binary-amd64/Release
  775eb3e99013c32776be8823665f2a87 5444 main/source/Sources
  f52514aedb250e974778e224e948799e 1988 main/source/Sources.gz
  6bc8b503efc5d59262fa16396dc85a1d 136 main/source/Release
+ 8525933bf65f156adfe84007275d1682 1242 extra/binary-i386/Packages
+ 4d28d2bd977f94559739782bd890756f 705 extra/binary-i386/Packages.gz
+ c08035a7d23a76b5635264ee90abbd3e 135 extra/binary-i386/Release
+ 6d061d0d7271c8132123c9a7fc424b03 3102 extra/binary-amd64/Packages
+ 22254f157aa0bd5dd17b6ea50879fac5 1605 extra/binary-amd64/Packages.gz
+ 057d621e53e5ada58dc35a5dea580d9c 136 extra/binary-amd64/Release
+ 9e4034d382df7c0e49a63ef35bcee47f 2086 extra/source/Sources
+ ec83b7439ef6d92bc2f452fee64f0edf 1040 extra/source/Sources.gz
+ ad6c2436ebdefac4cb6833a233f8be8f 137 extra/source/Release
 SHA1:
- 00eba8ae10e75a506c3d0dd5673a5a9303fef1d5 4427 main/binary-i386/Packages
- 723e33a505335e0897fb33de324f0084559d3c1a 1733 main/binary-i386/Packages.gz
+ 3f9d11ab1661133424ee419115f6ffd1f566a516 3186 main/binary-i386/Packages
+ c636668b74d7fb8f518ab2b8f9c0dbefb7dca2b6 1227 main/binary-i386/Packages.gz
  ac20881db33ee42739a01356d28286cd8b6ab0c2 134 main/binary-i386/Release
- 00eba8ae10e75a506c3d0dd5673a5a9303fef1d5 4427 main/binary-amd64/Packages
- 723e33a505335e0897fb33de324f0084559d3c1a 1733 main/binary-amd64/Packages.gz
+ 3f9d11ab1661133424ee419115f6ffd1f566a516 3186 main/binary-amd64/Packages
+ c636668b74d7fb8f518ab2b8f9c0dbefb7dca2b6 1227 main/binary-amd64/Packages.gz
  dd5e9af05285b6706c2113f0a2df10c104191aae 135 main/binary-amd64/Release
  1ba9c6ea77c7d20dea92a67584ebf9fca29f3721 5444 main/source/Sources
  29f99184f2f4740fd31d0127eb9c018a16c8f6b3 1988 main/source/Sources.gz
  f7e2c00d6713ba05cdcba6a4b536bc8436bef486 136 main/source/Release
+ a87f34003bcd216d68bdc2cd620fb2590ab080bf 1242 extra/binary-i386/Packages
+ ccb57e2fadb3f40f45f39cfd535c950c437bc933 705 extra/binary-i386/Packages.gz
+ 9fa4eacafdd0c81145f28384eb2afe8ff8aefe62 135 extra/binary-i386/Release
+ 2570710b4dc738e9d121c40217b3d8a81214bcd7 3102 extra/binary-amd64/Packages
+ 83d1fd8c6e838ca85f765c075cbe939551540fc3 1605 extra/binary-amd64/Packages.gz
+ acd841406919fb927e709a0c5870c991a3674a28 136 extra/binary-amd64/Release
+ d38da1e41b517997415eca7fd0956f941d7a0b43 2086 extra/source/Sources
+ e89f7781366298ccc69cc27b703627ff31d93cdb 1040 extra/source/Sources.gz
+ 53b8e6dd4781b5a7009d81a1cead867a23f9c8a8 137 extra/source/Release
 SHA256:
- bdc8f033e81e0a9897c61a354300118dc826c421a8451f8cb781a1d4422eef98 4427 main/binary-i386/Packages
- f146d5c298695685e85bae8794308d34f0ede0fc76e636d46f10451668de52cc 1733 main/binary-i386/Packages.gz
+ 5ded968fcd70a59374081669cd915705ebe7f40edacc15929acc11f3fa9f1a87 3186 main/binary-i386/Packages
+ 05270b27f994a685dc6ffd6130fd8b6f139412e6c034449e9312b33640c571b9 1227 main/binary-i386/Packages.gz
  f972467112bacca49d100ca104741efa1753e8f9618e921ed72b0f16e2cbd4a9 134 main/binary-i386/Release
- bdc8f033e81e0a9897c61a354300118dc826c421a8451f8cb781a1d4422eef98 4427 main/binary-amd64/Packages
- f146d5c298695685e85bae8794308d34f0ede0fc76e636d46f10451668de52cc 1733 main/binary-amd64/Packages.gz
+ 5ded968fcd70a59374081669cd915705ebe7f40edacc15929acc11f3fa9f1a87 3186 main/binary-amd64/Packages
+ 05270b27f994a685dc6ffd6130fd8b6f139412e6c034449e9312b33640c571b9 1227 main/binary-amd64/Packages.gz
  6883ccc01e722312162be37936df54ea1398619233ba92880d90c8d055d8fce7 135 main/binary-amd64/Release
  38688db283f12465b6a2a932ff46f87d71909a3ae686578f3b6c24b1cdef4628 5444 main/source/Sources
  7d0cec75e4c4c95a18534865a40798dd5cf7f9766afb7492ce991c19a56849ba 1988 main/source/Sources.gz
  6afbbe4641f386acf753bdd688a3bc863e5e59be2e3bd3a0a5d9b628fccfe4cf 136 main/source/Release
+ e83962fad69385a7809152d647460718b65fa7a41348ffbe8ff277886b00a16a 1242 extra/binary-i386/Packages
+ 7080374eb026746e4c0ec129d278b3df60995d4520c1735cc6e466fa7501024e 705 extra/binary-i386/Packages.gz
+ eb1c6827b898adb578e40a04ef9d63ad164d4fb736226572d15859fa66fb0e7e 135 extra/binary-i386/Release
+ 38dff79698bf923642b4b5dd1a70760bb236e8b583dff5424140f376f34b92a7 3102 extra/binary-amd64/Packages
+ 0933a5f22ea973b544156482eb35b93235c57010b4f50c38772117788a767fb9 1605 extra/binary-amd64/Packages.gz
+ d0cfd3ed741c6b43564328db1c92401a8b777be8259adcbfe6711203ccb2530c 136 extra/binary-amd64/Release
+ e43722041b40f424a127cbb0ec271b4664fe6cdff08d93b5e9bf17815e8bc956 2086 extra/source/Sources
+ 0d94bf227910ce1bd7fbe4a1d40fa96307df0a24eacc92b1fc709b3aa9849fe5 1040 extra/source/Sources.gz
+ 91d955c21fd347d8ec0012a13a1a2400323f26a6a9822f163b215f837e1b1f08 137 extra/source/Release

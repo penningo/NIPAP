@@ -4,5 +4,5 @@ Suite: stable
 Codename: stable
 Version: 3.1
 Architectures: i386 amd64 source
-Components: main
+Components: main extra
 Description: Official NIPAP apt repository
