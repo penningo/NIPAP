@@ -34,18 +34,18 @@ Description: Neat IP Address Planner
  large amounts of IP addresses. This is the common libraries.
 
 Package: nipap-www
-Version: 0.5.2dev-1
+Version: 0.5.3dev-2
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
 Installed-Size: 656
-Depends: python (>= 2.4), python-pylons (>= 1.0), python-pynipap, nipap-common
+Depends: python (>= 2.4), python-pylons (>= 1.0), python-pynipap, nipap-common, python-jinja2
 Priority: optional
 Section: web
-Filename: pool/main/n/nipap-www/nipap-www_0.5.2dev-1_all.deb
-Size: 181664
-SHA256: 83c37ae7f8e2c767edc4a8b8b1579275179d8c3edc9df34fb4e6c7c6d875d89b
-SHA1: 21ead1904720baadc5d6e05fefd07f7c0da16ed4
-MD5sum: 56cc05cfaab249cf848dda010fe174f8
+Filename: pool/main/n/nipap-www/nipap-www_0.5.3dev-2_all.deb
+Size: 181536
+SHA256: 5dfb4c8ff2733040bfab4ebc74ce1e362a736723e5259f6ec274c13e7542fbe8
+SHA1: 1a6f9f614282950850c1ab6fe59ad0b4e98865ca
+MD5sum: 17d0bbd9dfe2fd28aebf1501dfaa1a20
 Description: web frontend for NIPAP
  A web UI for the NIPAP IP address planning service.
 Python-Version: 2.5, 2.6, 2.7
