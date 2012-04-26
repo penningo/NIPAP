@@ -42,6 +42,10 @@ ifeq ($(CURBRANCH), $(shell echo -n 'gh-pages'))
 		reprepro --ignore=wrongdistribution -Vb . include stable ../../$$CHANGEFILE; \
 		cd ../.. ; \
 	done
+# TODO: loop over SUBPROJ/debian/changelog and copy them into repos/apt. We
+# need to find out the proper destination filename which should be the name of
+# the built .deb file but .changes instead. Perhaps it is easier to find the
+# .deb file and figure out the .changes file from there or even extract it?
 else
 	@echo "Please switch to branch: gh-pages"
 endif
