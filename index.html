@@ -2,52 +2,164 @@
 	<head>
 		<title>NIPAP - the Neat IP Address Planner</title>
 		<style type="text/css">
-			.main {
+			body {
+				font-family: Arial,Helvetica,Sans-Serif;
+			}
+			.container {
+				margin: 0;
+				margin-top: 10px;
+				margin-bottom: 50px;
+				padding: 0;
+				display: inline-block;
+				width: 800px;
+				text-align: left;
+				position: relative;
+
+				border-radius: 10px;
+				-moz-border-radius: 10px 10px 10px 10px;
+				-webkit-border-radius: 10px;
+
 				-webkit-box-shadow: 3px 3px 10px 5px rgba(0, 0, 0, 0.6);
 				-moz-box-shadow: 3px 3px 10px 5px rgba(0, 0, 0, 0.6);
 				box-shadow: 3px 3px 10px 5px rgba(0, 0, 0, 0.6);
 			}
+			.header {
+				margin: 0;
+				padding: 0;
+				text-align: left;
+				display: inline-block;
+				width: 100%;
+				background-color: #2D2D2D;
+
+				border-top-left-radius: 10px;
+				border-top-right-radius: 10px;
+				-moz-border-radius-topleft: 10px;
+				-moz-border-radius-topright: 10px;
+				-webkit-border-top-left-radius: 10px;
+				-webkit-border-top-right-radius: 10px;
+			}
+			.logo {
+				display: block;
+				float: left;
+			}
+			.menu {
+				display: block;
+				float: right;
+
+				padding: 10px;
+				font-size: 20px;
+
+				color: #FFFFFF;
+			}
+			.main {
+				margin: 0;
+				padding: 10px;
+				text-align: left;
+				background-color: #FFFFFF;
+
+				border-bottom-left-radius: 10px;
+				border-bottom-right-radius: 10px;
+				-moz-border-radius-bottomleft: 10px;
+				-moz-border-radius-bottomright: 10px;
+				-webkit-border-bottom-left-radius: 10px;
+				-webkit-border-bottom-right-radius: 10px;
+			}
+			h1 {
+				font-size: 40px;
+				margin: 0.3em;
+				padding-left: 20px;
+				color: #DD4B39;
+
+				text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.2);
+			}
+			h2 {
+				font-family: Arial,Helvetica,Sans-Serif;
+				font-size: 30px;
+				padding-left: 10px;
+
+				color: #DD4B39;
+				text-shadow: 0px 0px 10px rgba(90, 90, 90, 0.4);
+			}
+			nav {
+				float: left;
+				width: auto;
+			}
+			nav ul {
+				display: block;
+				position: absolute;
+				right: 20px;
+			}
+			nav ul li {
+				display: inline;
+				margin-left: 22px;
+			}
+			nav ul li a {
+				display: inline;
+				margin-left: 22px;
+				color: #FFFFFF;
+				text-decoration: none;
+			}
+			nav ul li a:hover {
+				display: inline;
+				margin-left: 22px;
+				color: #FFFFFF;
+				text-decoration: underline;
+			}
+
 		</style>
 	</head>
 	<body style="background-color: #dddddd;">
 		<div style="margin: 0; padding: 0; text-align: center; position: absolute; width: 100%; z-index: 0;">
-			<div class="main" style="margin: 10px; padding: 10px; display: inline-block; width: 800px; text-align: left; background-color: #ffffff; ">
-				<h1>NIPAP</h1>
-				<p>The Neat IP Address Planner</p>
-
-				<p>NIPAP is the coolest address planner out there with an awesome and blazingly fast search. IPv4 and IPv6 are equals in NIPAP - that is, complete feature parity exist for the two address families. Assigning new addresses is as easy as 1 2 3 with the integrated and easy-to-use address pool assignment features.</p>
-
-				<p>If you wish to integrate your own system with NIPAP, fear not, for NIPAP is built with a simple XML-RPC middleware. Both the web and CLI interact with the database through the XML-RPC API to 100%, guaranteeing that any feature available via the regular interfaces are also available to you.</p>
-
-				<p>Start by looking at some <a href="screenshots.html">screenshots of the gorgeous web interface</a>.</p>
-
-				<h2>Getting it</h2>
-				<p>If you are running Debian or Ubuntu, try using our repo by adding the following to /etc/apt/sources.list.d/nipap.list:<br/>
-				deb http://spritelink.github.com/NIPAP/repos/apt stable main
-				</p>
-				<p>NIPAP is hosted at GitHub. You will find the source together with issue tracking <a href="https://www.github.com/SpriteLink/NIPAP">here</a>. NIPAP is easily built into Debian packages by standard Python and Debian tools, check out README.dev and the Makefile in the root directory.</p>
-				<p>Do note how NIPAP depends on a new version of the ip4r addon for PostgreSQL. It is currently only available through <a href="http://pgfoundry.org/projects/ip4r/">CVS</a>.</p>
-
-				<h2>Documentation</h2>
-				<p>The source code of NIPAP is not overly complex and is fairly well documented making it overall rather easy to understand. Sphinx is used to generate pretty HTML pages directly from the source code which you can find at the following link:</p>
-				<ul>
-					<li><a href="nipap/index.html">Reference documentation</a>
-					<li><a href="jnipap/index.html">Java API</a>
-				</ul>
-				<br/><br/>
-
-				<h2>Powered by</h2>
-				<div >
-					<p>
-					<a href="http://python.org"><img src="images/python-powered-w-140x56.png" border="0" align="right" vspace="5" hspace="5"></a>The majority of NIPAP (including backend and the C in MVC part of the web GUI) is written in Python while, naturally, a large part of the web frontend is written in HTML and JavaScript, served through Pylons and Jinja2, for that special cozy Web2.0 feeling.
-					</p><p>
-					<a href="http://www.postgresql.org"><img src="images/postgresql-powered-95x51_4.gif" border="0" align="right" vspace="5" hspace="5"></a>PostgreSQL is the SQL database of choice and without it, this project could never have existed. In particular, there is an add-on called ip4r that adds index functionality to columns used to store IP addresses which is crucial to this project.
-					</p><p>
-					<a href="http://twistedmatrix.com"><img src="images/twisted-200px.png" border="0" height="100px" align="right" vspace="5" hspace="5"></a>Last, but certainly not least, NIPAP uses Twisted which is an event-driven, asynchronous networking engine - perfect for the NIPAP backend.
-					</p>
+			<div class="container">
+				<div class="header">
+					<div class="logo">
+						<h1>NIPAP</h1>
+					</div>
+					<div class="menu">
+						<nav>
+							<ul id="navbar">
+								<li><a href="/index.html">Overview</a></li>
+								<li><a href="/getting-started.html">Getting Started</a></li>
+							</ul>
+						</nav>
+					</div>
 				</div>
-				<br/>
-				<p style="text-align: center; font-size: 0.7em;">Copyright Kristian Larsson, Lukas Garberg 2011-2012.</p>
+				<div class="main">
+					<h2>What is it?</h2>
+					<p>The Neat IP Address Planner (NIPAP) is the coolest address planner out there with an awesome and blazingly fast search. IPv4 and IPv6 are equals in NIPAP - that is, complete feature parity exist for the two address families. Assigning new addresses is as easy as 1 2 3 with the integrated and easy-to-use address pool assignment features.</p>
+
+					<p>If you wish to integrate your own system with NIPAP, fear not, for NIPAP is built with a simple XML-RPC middleware. Both the web and CLI interact with the database through the XML-RPC API to 100%, guaranteeing that any feature available via the regular interfaces are also available to you.</p>
+
+					<p>Start by looking at some <a href="screenshots.html">screenshots of the gorgeous web interface</a> or check out the <a href="http://nipap-demo.spritelink.net/">demo installation</a> (login with demo/demo).</p>
+
+					<h2>Getting it</h2>
+					<p>If you are running Debian or Ubuntu, try using our repo by adding the following to /etc/apt/sources.list.d/nipap.list:<br/>
+					deb http://spritelink.github.com/NIPAP/repos/apt stable main
+					</p>
+					<p>NIPAP is hosted at GitHub. You will find the source together with issue tracking <a href="https://www.github.com/SpriteLink/NIPAP">here</a>. NIPAP is easily built into Debian packages by standard Python and Debian tools, check out README.dev and the Makefile in the root directory.</p>
+					<p>Do note how NIPAP depends on a new version of the ip4r addon for PostgreSQL. It is currently only available through <a href="http://pgfoundry.org/projects/ip4r/">CVS</a>.</p>
+
+					<h2>Documentation</h2>
+					<p>The source code of NIPAP is not overly complex and is fairly well documented making it overall rather easy to understand. Sphinx is used to generate pretty HTML pages directly from the source code which you can find at the following link:</p>
+					<ul>
+						<li><a href="nipap/index.html">Reference documentation</a>
+						<li><a href="jnipap/index.html">Java API</a>
+					</ul>
+					<br/><br/>
+
+					<h2>Powered by</h2>
+					<div >
+						<p>
+						<a href="http://python.org"><img src="images/python-powered-w-140x56.png" border="0" align="right" vspace="5" hspace="5"></a>The majority of NIPAP (including backend and the C in MVC part of the web GUI) is written in Python while, naturally, a large part of the web frontend is written in HTML and JavaScript, served through Pylons and Jinja2, for that special cozy Web2.0 feeling.
+						</p><p>
+						<a href="http://www.postgresql.org"><img src="images/postgresql-powered-95x51_4.gif" border="0" align="right" vspace="5" hspace="5"></a>PostgreSQL is the SQL database of choice and without it, this project could never have existed. In particular, there is an add-on called ip4r that adds index functionality to columns used to store IP addresses which is crucial to this project.
+						</p><p>
+						<a href="http://twistedmatrix.com"><img src="images/twisted-200px.png" border="0" height="100px" align="right" vspace="5" hspace="5"></a>Last, but certainly not least, NIPAP uses Twisted which is an event-driven, asynchronous networking engine - perfect for the NIPAP backend.
+						</p>
+					</div>
+					<br/>
+					<p style="text-align: center; font-size: 0.7em;">Copyright Kristian Larsson, Lukas Garberg 2011-2012.</p>
+				</div>
 			</div>
 		</div>
 	</body>
