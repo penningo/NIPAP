@@ -182,7 +182,7 @@ def list_pool(arg, opts):
     query = _expand_list_query(opts)
     res = Pool.search(s, query)
     if len(res['result']) > 0:
-        print "%-20s%-40s%-15s%-8s" % (
+        print "%-19s %-39s %-14s %-8s" % (
             "Name", "Description", "Default type", "4 / 6"
         )
         print "-----------------------------------------------------------------------------------"
@@ -194,7 +194,7 @@ def list_pool(arg, opts):
             desc = p.description[0:34] + "..."
         else:
             desc = p.description
-        print "%-20s%-40s%-15s%-2s / %-3s" % (
+        print "%-19s %-39s %-14s %-2s / %-3s" % (
             p.name, desc, p.default_type,
             str(p.ipv4_default_prefix_length),
             str(p.ipv6_default_prefix_length)
@@ -239,7 +239,7 @@ def list_prefix(arg, opts):
             continue
 
         try:
-            print "%-30s%-3s%-20s%-15s%-40s" % (
+            print "%-29s %-2s %-19s %-14s %-40s" % (
                 "".join("  " for i in range(p.indent)) + p.display_prefix,
                 p.type[0].upper(), p.node, p.order_id, p.description
             )
@@ -266,6 +266,7 @@ def add_prefix(arg, opts):
     p.node = opts.get('node')
     p.country = opts.get('country')
     p.order_id = opts.get('order_id')
+    p.vrf = opts.get('vrf')
     p.alarm_priority = opts.get('alarm_priority')
     p.comment = opts.get('comment')
     p.monitor = _str_to_bool(opts.get('monitor'))
@@ -415,6 +416,7 @@ def view_prefix(arg, opts):
     print "  %-15s : %s" % ("Description", p.description)
     print "  %-15s : %s" % ("Node", p.node)
     print "  %-15s : %s" % ("Order", p.order_id)
+    print "  %-15s : %s" % ("VRF", p.vrf)
     print "  %-15s : %s" % ("Alarm priority", p.alarm_priority)
     print "  %-15s : %s" % ("Monitor", p.monitor)
     print "-- Comment"
@@ -559,7 +561,8 @@ def modify_prefix(arg, opts):
 
     res = Prefix.list(s, { 'prefix': arg })
     if len(res) == 0:
-        print >> sys.stderr, "Prefix %s not found." % arg
+        print >> sys.stderr, "Prefix %s not found in schema %s." % (arg, s.name)
+        return
 
     p = res[0]
 
@@ -575,6 +578,8 @@ def modify_prefix(arg, opts):
         p.country = opts['country']
     if 'order_id' in opts:
         p.order_id = opts['order_id']
+    if 'vrf' in opts:
+        p.vrf = opts['vrf']
     if 'alarm_priority' in opts:
         p.alarm_priority = opts['alarm_priority']
     if 'monitor' in opts:
@@ -814,6 +819,13 @@ cmds = {
                                 'content_type': unicode,
                             }
                         },
+                        'vrf': {
+                            'type': 'option',
+                            'argument': {
+                                'type': 'value',
+                                'content_type': unicode,
+                            }
+                        },
                         'prefix': {
                             'type': 'option',
                             'content_type': unicode,
@@ -921,6 +933,13 @@ cmds = {
                                     }
                                 },
                                 'order': {
+                                    'type': 'option',
+                                    'argument': {
+                                        'type': 'value',
+                                        'content_type': unicode,
+                                    }
+                                },
+                                'vrf': {
                                     'type': 'option',
                                     'argument': {
                                         'type': 'value',

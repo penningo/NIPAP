@@ -9,12 +9,6 @@
 import re
 
 
-__author__      = "Kristian Larsson, Lukas Garberg"
-__author_email__ = "kll@tele2.net, lukas@spritelink.net"
-__license__     = "MIT"
-__status__      = "Development"
-__url__         = "http://github.com/plajjan/NIPAP"
-
 
 class Command:
     """ A command parser and handler
@@ -98,6 +92,7 @@ class Command:
 
         self.params = tree['params']
         self.key = {}
+        option_parsing = False
 
         # iterate the list of inputted commands
         i = 0
@@ -167,10 +162,14 @@ class Command:
                         # and set params to the option argument
                         self.params = { 'argument': val['argument'] }
 
+                    if option_parsing and p == key:
+                        del self.params[key]
 
                 # otherwise we are handling a command without arguments
                 else:
                     self.params = val.get('params')
+                    if self.exe is not None:
+                        option_parsing = True
 
             i += 1
 

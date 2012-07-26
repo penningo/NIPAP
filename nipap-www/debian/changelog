@@ -1,3 +1,57 @@
+nipap-www (0.8.0-1) stable; urgency=low
+
+  * Bug in database inconsistency checks fixed
+  * Regexp search improved; '.*' will now also match NULL values, which is
+    typically what users expect.
+  * CLI tab completion bug fixed (bug implemented by mistake in 0.7.0)
+  * Prefix type can now, in certain cases, be changed from web UI and CLI
+    application.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Jul 2012 12:46:18 +0200
+
+nipap-www (0.7.0-1) UNRELEASED; urgency=low
+
+  * Fix; Rendering of prefix list in web UI improvements
+  * CLI tab completion improvements
+  * Example tool for CSV export
+  * Toolbox menu now also for schemas!
+  * Fix; delete schema now works for non-empty schemas
+  * remove_prefix now does recursive delete
+  * Fix; Default auth backend is now local instead of LDAP
+  * Fix; quoting of default values in config file
+  * Fix; Bunch of comments in default config file
+  * Improve search interpretation tooltip
+  * Fix; IPv6 prefix search can handle bits set in host part of prefix
+  * Fix; find_free_prefix now handles /31s and /127 correctly
+  * Vastly improve find_free_prefix lookup speed, relevant for IPv6
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 25 Jul 2012 13:35:10 +0200
+
+nipap-www (0.6.1dev-1) oneiric; urgency=low
+
+  * Bugfix; prefix alarm priority can now be set.
+  * Added VRF prefix attribute to prefix list.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 31 May 2012 11:52:28 +0200
+
+nipap-www (0.6.0dev-1) oneiric; urgency=low
+
+  * Added VRF attribute to prefixes.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Apr 2012 09:03:02 +0200
+
+nipap-www (0.5.3dev-2) oneiric; urgency=low
+
+  * Removed session files from package.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Sat, 21 Apr 2012 11:11:10 +0200
+
+nipap-www (0.5.3dev-1) oneiric; urgency=low
+
+  * New upstream version.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 19 Apr 2012 09:23:49 +0200
+
 nipap-www (0.5.2dev-1) oneiric; urgency=low
 
   * New upstream version.

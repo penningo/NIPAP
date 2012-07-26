@@ -57,14 +57,19 @@
                     'node': $('input[name="prefix_node"]').val(),
                     'country': $('input[name="prefix_country"]').val(),
                     'order_id': $('input[name="prefix_order_id"]').val(),
+                    'vrf': $('input[name="prefix_vrf"]').val(),
                     'comment': $('input[name="prefix_comment"]').val(),
-                    'alarm_priority': $('input[name="prefix_alarm_priority"]').val()
+                    'alarm_priority': $('input[name="prefix_alarm_priority"]:checked').val()
                 };
 
                 if ($('input[name="prefix_monitor"]').is(':checked')) {
                     data.monitor = 'true';
                 } else {
                     data.monitor = 'false';
+                }
+
+                if ('{{ c.prefix.type }}' != 'host') {
+                    data.type = $('input[name="prefix_type"]:checked').val();
                 }
 
                 $.getJSON('{{ h.url(controller="xhr", action="edit_prefix", id=c.prefix.id) }}', data, prefixEdited);
@@ -88,21 +93,36 @@
 
 {% block content %}
 
-<h2>Edit {{ c.prefix.type }} {{ c.prefix.prefix }}</h2>
+<div class="page-title">
+Prefix administration &mdash;&gt; edit prefix
+</div>
 
 <!--
 
     PREFIX DATA
 
 -->
-<div id="prefix_data_container" style="padding: 15px;">
+<div id="prefix_data_container">
 <form method="post" name="prefix_form" action="{{ h.url(controller="prefix", action="edit", id=c.prefix.id, schema=c.schema.id) }}">
     <div class="options-group">
         <div class="options-content">
+            <h3 class="options-group-heading">Properties of {{ c.prefix.type }} {{ c.prefix.prefix }}</h3>
             <div class="option">
                 <dl>
                     <dt>Prefix</dt>
                     <dd><input type="text" name="prefix_prefix" value="{{ c.prefix.prefix }}" class="tooltip" title="The prefix, i.e. 192.0.2.16/28"></dd>
+                </dl>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="option">
+                <dl>
+                    <dt>Type</dt>
+                    <dd>
+                        <input type="radio" id="prefix-type-res" name="prefix_type" value="reservation" class="tooltip" title="" {% if c.prefix.type == 'reservation' %}checked{% elif c.prefix.type == 'host' %}disabled{% endif %}><label for="prefix-type-res">Reservation</label>
+                        <input type="radio" id="prefix-type-ass" name="prefix_type" value="assignment" class="tooltip" title="" {% if c.prefix.type == 'assignment' %}checked{% elif c.prefix.type == 'host' %}disabled{% endif %}><label for="prefix-type-ass">Assignment</label>
+                    </dd>
                 </dl>
             </div>
 
@@ -154,6 +174,19 @@
                     </dt>
                     <dd>
                         <input type="text" name="prefix_order_id" value="{{ c.prefix.order_id or '' }}">
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="rule"></div>
+
+            <div class="option">
+                <dl>
+                    <dt>
+                        VRF
+                    </dt>
+                    <dd>
+                        <input type="text" name="prefix_vrf" value="{{ c.prefix.vrf or '' }}">
                     </dd>
                 </dl>
             </div>

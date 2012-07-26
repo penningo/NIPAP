@@ -149,13 +149,13 @@ import logging
 import sys
 import os
 
-__version__		= "0.5.2"
+__version__		= "0.8.0"
 __author__		= "Kristian Larsson, Lukas Garberg"
 __author_email__= "kll@tele2.net, lukas@spritelink.net"
 __copyright__	= "Copyright 2011, Kristian Larsson, Lukas Garberg"
 __license__		= "MIT"
 __status__		= "Development"
-__url__			= "http://github.com/plajjan/NIPAP"
+__url__			= "http://SpriteLink.github.com/NIPAP"
 
 
 # This variable holds the URI to the nipap XML-RPC service which will be used.
@@ -665,6 +665,7 @@ class Prefix(Pynipap):
     country = None
     external_key = None
     order_id = None
+    vrf = None
     authoritative_source = None
     alarm_priority = None
     monitor = None
@@ -813,6 +814,7 @@ class Prefix(Pynipap):
             'type': self.type,
             'country': self.country,
             'order_id': self.order_id,
+            'vrf': self.vrf,
             'external_key': self.external_key,
             'alarm_priority': self.alarm_priority,
             'monitor': self.monitor
@@ -878,9 +880,9 @@ class Prefix(Pynipap):
         else:
             # remove keys which we are not allowed to edit
             del(data['schema'])
-            del(data['type'])
 
             try:
+                # save
                 self._xmlrpc.connection.edit_prefix(
                     {
                         'schema': { 'id': self.schema.id },
@@ -888,8 +890,12 @@ class Prefix(Pynipap):
                         'attr': data,
                         'auth': self._auth_opts.options
                     })
+
             except xmlrpclib.Fault, f:
                 raise _fault_to_exception(f)
+
+        # update cache
+        _cache['Prefix'][self.id] = self
 
 
 
@@ -935,6 +941,7 @@ class Prefix(Pynipap):
         p.indent = pref['indent']
         p.country = pref['country']
         p.order_id = pref['order_id']
+        p.vrf = pref['vrf']
         p.external_key = pref['external_key']
         p.authoritative_source = pref['authoritative_source']
         p.alarm_priority = pref['alarm_priority']
@@ -1024,7 +1031,7 @@ class NipapDuplicateError(NipapError):
 #
 
 # Simple object cache
-# TODO: fix somekind of timeout
+# TODO: fix some kind of timeout
 _cache = {
     'Pool': {},
     'Prefix': {},

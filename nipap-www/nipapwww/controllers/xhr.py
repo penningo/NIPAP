@@ -146,14 +146,6 @@ class XhrController(BaseController):
         if 'offset' in request.params:
             search_options['offset'] = request.params['offset']
 
-        log.debug("params: %s" % str(request.params))
-
-        log.debug("Smart search query: schema=%d q=%s search_options=%s" %
-            (int(request.params['schema']),
-            request.params['query_string'],
-            str(search_options)
-        ))
-
         try:
             schema = Schema.get(int(request.params['schema']))
             result = Pool.smart_search(schema,
@@ -273,8 +265,6 @@ class XhrController(BaseController):
         # fetch attributes from request.params
         attr = XhrController.extract_prefix_attr(request.params)
 
-        log.debug("Got %d attributes" % len(attr))
-
         # build query dict
         n = 0
         q = {}
@@ -352,12 +342,6 @@ class XhrController(BaseController):
         if 'offset' in request.params:
             search_options['offset'] = request.params['offset']
 
-        log.debug("Smart search query: schema=%s q=%s search_options=%s" %
-            (str(request.params.get('schema')),
-            request.params.get('query_string'),
-            str(search_options)
-        ))
-
         try:
             schema = Schema.get(int(request.params['schema']))
             result = Prefix.smart_search(schema,
@@ -386,6 +370,7 @@ class XhrController(BaseController):
             pool            ID of pool
             country         Country where the prefix is used
             order_id        Order identifier
+            vrf             VRF
             alarm_priority  Alarm priority of prefix
             monitor         If the prefix should be monitored or not
 
@@ -404,7 +389,10 @@ class XhrController(BaseController):
 
         # standard parameters
         if 'description' in request.params:
-            p.description = request.params['description']
+            if request.params['description'].strip() == '':
+                p.description = None
+            else:
+                p.description = request.params['description']
 
         if 'comment' in request.params:
             if request.params['comment'].strip() == '':
@@ -439,6 +427,12 @@ class XhrController(BaseController):
             else:
                 p.order_id = request.params['order_id']
 
+        if 'vrf' in request.params:
+            if request.params['vrf'].strip() == '':
+                p.vrf = None
+            else:
+                p.vrf = request.params['vrf']
+
         if 'alarm_priority' in request.params:
             p.alarm_priority = request.params['alarm_priority']
         if 'monitor' in request.params:
@@ -446,8 +440,6 @@ class XhrController(BaseController):
                 p.monitor = True
             else:
                 p.monitor = False
-
-        log.debug('request: %s' % str(request.params))
 
         # arguments
         args = {}
@@ -489,6 +481,9 @@ class XhrController(BaseController):
             # extract attributes
             if 'prefix' in request.params:
                 p.prefix = request.params['prefix']
+
+            if 'type' in request.params:
+                p.type = request.params['type']
 
             if 'description' in request.params:
                 p.description = request.params['description']
@@ -532,6 +527,12 @@ class XhrController(BaseController):
                 else:
                     p.order_id = request.params['order_id']
 
+            if 'vrf' in request.params:
+                if request.params['vrf'].strip() == '':
+                    p.vrf = None
+                else:
+                    p.vrf = request.params['vrf']
+
             p.save()
 
         except NipapError, e:
@@ -554,6 +555,23 @@ class XhrController(BaseController):
             return json.dumps({'error': 1, 'message': e.args, 'type': type(e).__name__})
 
         return json.dumps(p, cls=NipapJSONEncoder)
+
+
+
+    def remove_schema(self):
+        """ Remove a schema.
+        """
+
+        try:
+            schema = Schema.get(int(request.params['id']))
+            schema.remove()
+
+        except NipapError, e:
+            return json.dumps({'error': 1, 'message': e.args, 'type': type(e).__name__})
+
+        return json.dumps(schema, cls=NipapJSONEncoder)
+
+
 
 
 class NipapJSONEncoder(json.JSONEncoder):
@@ -602,6 +620,7 @@ class NipapJSONEncoder(json.JSONEncoder):
                 'indent': obj.indent,
                 'country': obj.country,
                 'order_id': obj.order_id,
+                'vrf': obj.vrf,
                 'authoritative_source': obj.authoritative_source,
                 'monitor': obj.monitor,
                 'alarm_priority': obj.alarm_priority,

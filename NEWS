@@ -1,0 +1,39 @@
+Version 0.8.0
+-------------
+ * Bug in database inconsistency checks fixed
+ * Regexp search improved; '.*' will now also match NULL values, which is
+   typically what users expect.
+ * CLI tab completion bug fixed (bug implemented by mistake in 0.7.0)
+ * Prefix type can now, in certain cases, be changed from web UI and CLI
+   application.
+
+Version 0.7.0
+-------------
+ * User friendly error messages & improved handling for invalid prefix input
+ * Fix; Rendering of prefix list in web UI improvements
+ * CLI tab completion improvements
+ * Example tool for CSV export
+ * Toolbox menu now also for schemas!
+ * Fix; delete schema now works for non-empty schemas
+ * remove_prefix now does recursive delete
+ * Fix; Default auth backend is now local instead of LDAP
+ * Fix; quoting of default values in config file
+ * Fix; Bunch of comments in default config file
+ * Improve search interpretation tooltip
+ * Fix; IPv6 prefix search can handle bits set in host part of prefix
+ * Fix; find_free_prefix now handles /31s and /127 correctly
+ * Vastly improve find_free_prefix lookup speed, relevant for IPv6
+
+Version 0.6.1
+-------------
+ * Add VRF attribute to web UI
+ * Fix; Prefix list search key 'family' now works
+ * Fix; Setting alarm priority in web UI now works
+
+Version 0.6.0
+-------------
+ * Add VRF attribute to prefixes
+
+Version 0.5.0
+-------------
+ * First half-baked release...

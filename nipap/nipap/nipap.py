@@ -59,6 +59,7 @@
     * :attr:`indent` - Depth in prefix tree. Set by NIPAP.
     * :attr:`country` - Country where the prefix resides (two-letter country code).
     * :attr:`order_id` - Order identifier.
+    * :attr:`vrf` - VRF in which the prefix resides.
     * :attr:`external_key` - A field for use by external systems which needs to
         store references to its own dataset.
     * :attr:`authoritative_source` - String identifying which system last
@@ -404,6 +405,22 @@ class Nipap:
 
             raise NipapError(str(e))
 
+        except psycopg2.DataError, e:
+            self._con_pg.rollback()
+
+            m = re.search('invalid cidr value: "([^"]+)"', e.pgerror)
+            if m is not None:
+                strict_prefix = str(IPy.IP(m.group(1), make_net = True))
+                estr = "Invalid prefix (%s); bits set to right of mask. Network address for current mask: %s" % (m.group(1), strict_prefix)
+                raise NipapValueError(estr)
+
+            m = re.search('invalid input syntax for type cidr: "([^"]+)"', e.pgerror)
+            if m is not None:
+                estr = "Invalid syntax for prefix (%s)" % m.group(1)
+                raise NipapValueError(estr)
+
+            raise NipapValueError(str(e))
+
         except psycopg2.Error, e:
             try:
                 self._con_pg.rollback()
@@ -659,6 +676,9 @@ class Nipap:
         """
 
         self._logger.debug("remove_schema called; spec: %s" % str(spec))
+
+        self.remove_prefix(auth, schema_spec = spec, spec = { 'prefix': '0.0.0.0/0' }, recursive = True)
+        self.remove_prefix(auth, schema_spec = spec, spec = { 'prefix': '::/0' }, recursive = True)
 
         schemas = self.list_schema(spec)
         where, params = self._expand_schema_spec(spec)
@@ -1599,7 +1619,7 @@ class Nipap:
 
         allowed_keys = ['id', 'family', 'schema',
             'type', 'pool_name', 'pool_id', 'prefix', 'pool', 'monitor',
-            'external_key' ]
+            'external_key', 'vrf' ]
         for key in spec.keys():
             if key not in allowed_keys:
                 raise NipapExtraneousInputError("Key '" + key + "' not allowed in prefix spec.")
@@ -1612,7 +1632,19 @@ class Nipap:
             if spec != {'id': spec['id'], 'schema': spec['schema']}:
                 raise NipapExtraneousInputError("If id specified, no other keys are allowed.")
 
+        family = None
+        if 'family' in spec:
+            family = spec['family']
+            del(spec['family'])
+
         where, params = self._sql_expand_where(spec)
+
+        if family:
+            params['family'] = family
+            if len(params) == 0:
+                where = "family(prefix) = %(family)s"
+            else:
+                where += " AND family(prefix) = %(family)s"
 
         self._logger.debug("where: %s params: %s" % (where, str(params)))
         return where, params
@@ -1667,6 +1699,7 @@ class Nipap:
             prefix_attr['node'] = 'node'
             prefix_attr['country'] = 'country'
             prefix_attr['order_id'] = 'order_id'
+            prefix_attr['vrf'] = 'vrf'
             prefix_attr['external_key'] = 'external_key'
             prefix_attr['authoritative_source'] = 'authoritative_source'
             prefix_attr['alarm_priority'] = 'alarm_priority'
@@ -1689,11 +1722,24 @@ class Nipap:
                         'col_prefix': col_prefix,
                         'operator': _operation_map[query['operator']]
                         }
+
+            elif query['operator'] in (
+                    'like',
+                    'regex_match',
+                    'regex_not_match'):
+                # we COALESCE column with '' to allow for example a regexp
+                # search on '.*' to match columns which are NULL in the
+                # database
+                where = str(" COALESCE(%s%s, '') %s %%s " %
+                        ( col_prefix, prefix_attr[query['val1']],
+                        _operation_map[query['operator']] )
+                        )
+
             else:
                 where = str(" %s%s %s %%s " %
-                    ( col_prefix, prefix_attr[query['val1']],
-                    _operation_map[query['operator']] )
-                )
+                        ( col_prefix, prefix_attr[query['val1']],
+                        _operation_map[query['operator']] )
+                        )
 
             opt.append(query['val2'])
 
@@ -1784,7 +1830,7 @@ class Nipap:
         allowed_attr = [
             'authoritative_source', 'prefix', 'schema', 'description',
             'comment', 'pool', 'node', 'type', 'country',
-            'order_id', 'alarm_priority', 'monitor', 'external_key' ]
+            'order_id', 'vrf', 'alarm_priority', 'monitor', 'external_key' ]
         self._check_attr(attr, req_attr, allowed_attr)
         if ('description' not in attr) and ('host' not in attr):
             raise NipapMissingInputError('Either description or host must be specified.')
@@ -1852,7 +1898,8 @@ class Nipap:
         allowed_attr = [
             'authoritative_source', 'prefix', 'description',
             'comment', 'pool', 'node', 'type', 'country',
-            'order_id', 'alarm_priority', 'monitor', 'external_key' ]
+            'order_id', 'vrf', 'alarm_priority', 'monitor',
+            'external_key' ]
 
         self._check_attr(attr, [], allowed_attr)
 
@@ -2117,7 +2164,25 @@ class Nipap:
 
 
 
-    def remove_prefix(self, auth, schema_spec, spec):
+    def _db_remove_prefix(self, spec, recursive = False):
+        """ Do the underlying database operations to delete a prefix
+        """
+        if recursive:
+            prefix = spec['prefix']
+            del spec['prefix']
+            where, params = self._expand_prefix_spec(spec)
+            spec['prefix'] = prefix
+            params['prefix'] = prefix
+            where = 'prefix <<= %(prefix)s AND ' + where
+        else:
+            where, params = self._expand_prefix_spec(spec)
+
+        sql = "DELETE FROM ip_net_plan AS p WHERE %s" % where
+        self._execute(sql, params)
+
+
+
+    def remove_prefix(self, auth, schema_spec, spec, recursive = False):
         """ Remove prefix matching `spec`.
 
             * `auth` [BaseAuth]
@@ -2130,12 +2195,28 @@ class Nipap:
 
         self._logger.debug("remove_prefix called; spec: %s" % str(spec))
 
+        # sanity check - do we have all attributes?
+        if 'id' in spec:
+            # recursive requires a prefix, so translate id to prefix
+            p = self.list_prefix(auth, schema_spec, spec)[0]
+            del spec['id']
+            spec['prefix'] = p['prefix']
+        elif 'prefix' in spec:
+            pass
+        else:
+            raise NipapMissingInputError('missing prefix or id of prefix')
+
         schema = self._get_schema(auth, schema_spec)
         spec['schema'] = schema['id']
         prefixes = self.list_prefix(auth, schema_spec, spec)
-        where, params = self._expand_prefix_spec(spec)
-        sql = "DELETE FROM ip_net_plan AS p WHERE %s" % where
-        self._execute(sql, params)
+
+        if recursive:
+            spec['type'] = 'host'
+            self._db_remove_prefix(spec, recursive)
+            del spec['type']
+            self._db_remove_prefix(spec, recursive)
+        else:
+            self._db_remove_prefix(spec)
 
         # write to audit table
         audit_params = {
@@ -2400,6 +2481,7 @@ class Nipap:
         indent,
         country,
         order_id,
+        vrf,
         external_key,
         authoritative_source,
         alarm_priority,
@@ -2566,10 +2648,15 @@ class Nipap:
                 query_str_part['interpretation'] = 'IPv6 prefix'
                 query_str_part['operator'] = 'contained_within_equals'
                 query_str_part['attribute'] = 'prefix'
+
+                strict_prefix = str(IPy.IP(query_str_part['string'], make_net = True))
+                if query_str_part['string'] != strict_prefix:
+                    query_str_part['strict_prefix'] = strict_prefix
+
                 query_parts.append({
                     'operator': 'contained_within_equals',
                     'val1': 'prefix',
-                    'val2': query_str_part['string']
+                    'val2': strict_prefix
                 })
 
             # IPv6 address
@@ -2585,6 +2672,7 @@ class Nipap:
                 })
 
             # Description or comment
+            # TODO: add an equal search for VRF here
             else:
                 self._logger.debug("Query part '" + query_str_part['string'] + "' interpreted as desc/comment")
                 query_str_part['interpretation'] = 'text'
