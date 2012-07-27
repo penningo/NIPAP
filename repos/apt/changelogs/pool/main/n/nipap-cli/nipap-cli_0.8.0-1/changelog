@@ -1,0 +1,65 @@
+nipap-cli (0.8.0-1) stable; urgency=low
+
+  * Bug in database inconsistency checks fixed
+  * Regexp search improved; '.*' will now also match NULL values, which is
+    typically what users expect.
+  * CLI tab completion bug fixed (bug implemented by mistake in 0.7.0)
+  * Prefix type can now, in certain cases, be changed from web UI and CLI
+    application.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Jul 2012 12:44:33 +0200
+
+nipap-cli (0.7.0-1) UNRELEASED; urgency=low
+
+  * Fix; Rendering of prefix list in web UI improvements
+  * CLI tab completion improvements
+  * Example tool for CSV export
+  * Toolbox menu now also for schemas!
+  * Fix; delete schema now works for non-empty schemas
+  * remove_prefix now does recursive delete
+  * Fix; Default auth backend is now local instead of LDAP
+  * Fix; quoting of default values in config file
+  * Fix; Bunch of comments in default config file
+  * Improve search interpretation tooltip
+  * Fix; IPv6 prefix search can handle bits set in host part of prefix
+  * Fix; find_free_prefix now handles /31s and /127 correctly
+  * Vastly improve find_free_prefix lookup speed, relevant for IPv6
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 25 Jul 2012 13:37:39 +0200
+
+nipap-cli (0.2.0-1) UNRELEASED; urgency=low
+
+  * Added VRF attribute to prefixes.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Apr 2012 09:01:45 +0200
+
+nipap-cli (0.1.2-1) UNRELEASED; urgency=low
+
+  * New upstream version.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 19 Apr 2012 14:43:13 +0200
+
+nipap-cli (0.1.1-1) UNRELEASED; urgency=low
+
+  * New upstream version.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Sun, 25 Mar 2012 22:01:15 +0200
+
+nipap-cli (0.1.0-3) UNRELEASED; urgency=low
+
+  * Replaced ${python:Depends} in dependencies with python (>= 2.4)
+    for compatibility.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 12:52:58 +0100
+
+nipap-cli (0.1.0-2) UNRELEASED; urgency=low
+
+  * Modifications...
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 10:10:04 +0100
+
+nipap-cli (0.1.0-1) UNRELEASED; urgency=low
+
+  * Initial release.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 08:59:10 +0100

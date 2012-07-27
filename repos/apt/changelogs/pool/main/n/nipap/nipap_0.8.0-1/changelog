@@ -1,8 +1,55 @@
+nipap (0.8.0-1) stable; urgency=low
+
+  * Bug in database inconsistency checks fixed
+  * Regexp search improved; '.*' will now also match NULL values, which is
+    typically what users expect.
+  * CLI tab completion bug fixed (bug implemented by mistake in 0.7.0)
+  * Prefix type can now, in certain cases, be changed from web UI and CLI
+    application.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Jul 2012 12:39:00 +0200
+
+nipap (0.7.0-1) UNRELEASED; urgency=low
+
+  * Fix; Rendering of prefix list in web UI improvements
+  * CLI tab completion improvements
+  * Example tool for CSV export
+  * Toolbox menu now also for schemas!
+  * Fix; delete schema now works for non-empty schemas
+  * remove_prefix now does recursive delete
+  * Fix; Default auth backend is now local instead of LDAP
+  * Fix; quoting of default values in config file
+  * Fix; Bunch of comments in default config file
+  * Improve search interpretation tooltip
+  * Fix; IPv6 prefix search can handle bits set in host part of prefix
+  * Fix; find_free_prefix now handles /31s and /127 correctly
+  * Vastly improve find_free_prefix lookup speed, relevant for IPv6
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 25 Jul 2012 13:34:02 +0200
+
+nipap (0.6.1-1) oneiric; urgency=low
+
+  * Bugfix; list_prefix API function can now handle 'family' search key.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 31 May 2012 11:54:03 +0200
+
+nipap (0.6.0-1) oneiric; urgency=low
+
+  * Added VRF attribute to prefixes.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Apr 2012 09:00:16 +0200
+
 nipap (0.5.12-1) oneiric; urgency=low
 
-  * Testing this changelog thingy
+  * New upstream version.
 
- -- Kristian Larsson <kll@spritelink.net>  Sat, 25 Feb 2012 12:34:37 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Sat, 21 Apr 2012 17:54:59 +0200
+
+nipap (0.5.11-1) oneiric; urgency=low
+
+  * New upstream version.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 19 Apr 2012 09:14:20 +0200
 
 nipap (0.5.10-1) oneiric; urgency=low
 
