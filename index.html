@@ -1,27 +1,26 @@
 ---
 ---
 {% include header.html %}
-	<h1>What is it?</h1>
+	<h1>What is NIPAP?</h1>
 	<p>The Neat IP Address Planner (NIPAP) is the coolest address planner out there with an awesome and blazingly fast search. IPv4 and IPv6 are equals in NIPAP - that is, complete feature parity exist for the two address families. Assigning new addresses is as easy as 1 2 3 with the integrated and easy-to-use address pool assignment features.</p>
 
 	<p>If you wish to integrate your own system with NIPAP, fear not, for NIPAP is built with a simple XML-RPC middleware. Both the web and CLI interact with the database through the XML-RPC API to 100%, guaranteeing that any feature available via the regular interfaces are also available to you.</p>
 
 	<p>Start by looking at some <a href="screenshots.html">screenshots of the gorgeous web interface</a> or check out the <a href="http://nipap-demo.spritelink.net/">demo installation</a> (login with demo/demo).</p>
 
-	<h1>Getting it</h1>
-	<p>If you are running Debian or Ubuntu, try using our repo by adding the following to /etc/apt/sources.list.d/nipap.list:<br/>
-	deb http://spritelink.github.com/NIPAP/repos/apt stable main
-	</p>
-	<p>NIPAP is hosted at GitHub. You will find the source together with issue tracking <a href="https://www.github.com/SpriteLink/NIPAP">here</a>. NIPAP is easily built into Debian packages by standard Python and Debian tools, check out README.dev and the Makefile in the root directory.</p>
-	<p>Do note how NIPAP depends on a new version of the ip4r addon for PostgreSQL. It is currently only available through <a href="http://pgfoundry.org/projects/ip4r/">CVS</a>.</p>
-
-	<h1>Documentation</h1>
-	<p>The source code of NIPAP is not overly complex and is fairly well documented making it overall rather easy to understand. Sphinx is used to generate pretty HTML pages directly from the source code which you can find at the following link:</p>
+	<h1>Features</h1>
 	<ul>
-		<li><a href="nipap/index.html">Reference documentation</a>
-		<li><a href="jnipap/index.html">Java API</a>
+		<li>A clean and beautiful yet intuitive web interface</li>
+		<li>CLI for the hardcore user</li>
+		<li>IPv6 support with full feature parity to IPv4</li>
+		<li>VRF support through the use of "schemas", allowing overlapping prefixes</li>
+		<li>Blazing fast and scalable to millions of prefixes</li>
+		<li>"Intelligent" search function</li>
+		<li>Integrated audit log</li>
+		<li>IP address request system for automatically assigning suitable prefixes</li>
+		<li>XML-RPC middleware, allowing easy integration with other applications or writing</li>
+		<li>Flexible authentication using SQLite and/or LDAP</li>
 	</ul>
-	<br/><br/>
 
 	<h1>Powered by</h1>
 	<div >
