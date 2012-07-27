@@ -17,17 +17,21 @@
     </div>
     <div class="section" id="debian-installation">
         <h1>Debian installation</h1>
-        <p>Add the NIPAP repo to your package sources and update your lists.
-        echo &quot;deb <a class="reference external" href="http://spritelink.github.com/NIPAP/repos/apt">http://spritelink.github.com/NIPAP/repos/apt</a> stable main&quot; &gt; /etc/apt/sources.list.d/nipap.list
-        apt-get update</p>
-        <p>There are now five new packages;</p>
-        <p><a class="reference external" href="mailto:root&#64;debian">root&#64;debian</a>:~# apt-cache search nipap
+        <p>Add the NIPAP repo to your package sources and update your lists:</p>
+        <pre class="literal-block">
+        echo &quot;deb http://spritelink.github.com/NIPAP/repos/apt stable main&quot; &gt; /etc/apt/sources.list.d/nipap.list
+        apt-get update
+        </pre>
+        <p>There are now five new packages:</p>
+        <pre class="literal-block">
+        root&#64;debian:~# apt-cache search nipap
         nipap-cli - Neat IP Address Planner
         nipap-common - Neat IP Address Planner
         nipap-www - web frontend for NIPAP
         nipapd - Neat IP Address Planner XML-RPC daemon
         python-pynipap - Python module for accessing NIPAP
-        <a class="reference external" href="mailto:root&#64;debian">root&#64;debian</a>:~#</p>
+        root&#64;debian:~#
+        </pre>
         <p>'nipapd' contains the XML-RPC middleware daemon which is a required component
         in the NIPAP suite. It's the glue between the database and the rest of the
         world. 'nipap-common' is more of a library with common stuff needed by all the
@@ -39,85 +43,101 @@
         you will need 'python-pynipap'. If you want, you can install the nipapd
         middleware on one machine and the CLI and/or web on a different one.</p>
         <p>Once you've picked your packages, issue apt-get install. Here we install the
-        nipapd daemon and CLI client;
-        <tt class="docutils literal"><span class="pre">apt-get</span> install nipapd <span class="pre">nipap-cli</span></tt>
-        apt-get will complain about that the packages cannot be authenticated. This is
+        nipapd daemon and CLI client:</p>
+        <pre class="literal-block">
+        apt-get install nipapd nipap-cli
+        </pre>
+        <p>apt-get will complain about that the packages cannot be authenticated. This is
         due to the reason that the NIPAP Debian repository is not signed. Ignore the
         warning and type 'y' to continue. After the installation is done, you will have
         a PostgreSQL database and all the other necessary dependancies installed except
         for ip4r, an addon to Postgres which allows for efficient indexing of IPv4 and
         IPv6 data.</p>
-        <div class="section" id="ip4r">
-            <h2>ip4r</h2>
-            <p>Installing ip4r must currently be done from source as the version shipped in
-            Debian / Ubuntu or any other distribution is too old and only supports IPv4. If
-            you are absolutely certain you will never use IPv6, you can go ahead and
-            install the package postgresql-9.1-ip4r or the appropriate package for your
-            Postgres version.</p>
-            <p>Get ip4r from CVS; <a class="reference external" href="http://pgfoundry.org/scm/?group_id=1000079">http://pgfoundry.org/scm/?group_id=1000079</a>
-            Once you have it, follow the instructions to have it installed on your machine.
-            It should be a simple matter of getting a few dev libs for postgresl via apt
-            and then ./configure &amp;&amp; make &amp;&amp; make install</p>
-        </div>
-        <div class="section" id="populating-the-database">
-            <h2>Populating the database</h2>
-            <p>The database needs to be populated with tables and a database user that the
-            nipapd daemon can authenticate as. This is unfortunately a manual task for now.
-            Hopefully it will soon be done through debians post-installation sciprint
-            infrastructure. Until then, you need to follow these steps.</p>
-            <p>Begin by creating a new database user. To administrate the Postgres database,
-            you typically sudo to root and then su to postgres, from where you can add the
-            new user:
-            <tt class="docutils literal">sudo <span class="pre">-i</span>
-                su - postgres
-                createuser <span class="pre">-S</span> <span class="pre">-R</span> <span class="pre">-D</span> <span class="pre">-W</span> nipap
-                createdb <span class="pre">-O</span> nipap nipap</tt>
-            You'll be prompted for a new password when creating the user- remember it. Now
-            we need to populate the database with some tables and functions. In the ip4r
-            directory downloaded via CVS, there is a file called ip4r.sql that needs to be
-            run in for the 'nipap' database, again as the nipap user;
-            <tt class="docutils literal">psql <span class="pre">-d</span> nipap <span class="pre">-f</span> &lt;path to ip4r.sql&gt;</tt>
-            Continue with the functions file followed by the tables;
-            <tt class="docutils literal">psql <span class="pre">-d</span> nipap <span class="pre">-f</span> /usr/share/nipap/sql/functions.plsql
-                psql <span class="pre">-d</span> nipap <span class="pre">-f</span> /usr/share/nipap/sql/ip_net.plsql</tt></p>
-            <p>Your database is now ready to go!</p>
-        </div>
-        <div class="section" id="running-nipapd">
-            <h2>Running nipapd</h2>
-            <p>Edit /etc/nipap/nipap.conf and fill in the database password that you set
-            earlier. Edit /etc/default/nipapd and set RUN=yes. Now you can go ahead and
-            start nipapd by executing <tt class="docutils literal">/etc/init.d/nipapd start</tt></p>
-            <p>nipapd ships with a default local authentication database with a user called
-            'guest' and with the password 'guest'. You can set up the CLI client to test
-            your new setup or continue to the web UI configuration to get the web up and
-            running.</p>
-        </div>
-        <div class="section" id="cli-configuration">
-            <h2>CLI configuration</h2>
-            <p>This is pretty easy, once you have the nipap-cli command installed, a new
-            command, 'nipap', is available to you. It reads .nipaprc in your home directory
-            and expects to find things like the host address of the nipapd and the
-            authentication credentials.</p>
-            <p>Here's an example .nipaprc that will work towards localhost with the default
-            guest login.</p>
-            <p>[global]
-            hostname = localhost
-            port     = 1337
-            username = guest
-            password = guest
-            default_schema = test</p>
-            <p>The last option sets which schema which is the default to work with if nothing
-            else is set. Schemas is an integral part of working with NIPAP and you can read
-            more about it in the user documentation. For now, let's create that test schema
-            so that you can work with it;
-            <tt class="docutils literal">nipap schema add name test description &quot;My test schema&quot;</tt></p>
-            <p>Now let's try adding a prefix too;
-            <tt class="docutils literal">nipap address add prefix 192.0.2.0/24 type assignment description &quot;test prefix&quot;</tt></p>
-            <p>And list everything covered by 0.0.0.0/0
-            <tt class="docutils literal">nipap address list 0/0</tt></p>
-            <p>That wraps up this getting started guide, for more information see the manual
-            pages.</p>
-        </div>
+    </div>
+    <div class="section" id="ip4r">
+        <h1>ip4r</h1>
+        <p>Installing ip4r must currently be done from source as the version shipped in
+        Debian / Ubuntu or any other distribution is too old and only supports IPv4. If
+        you are absolutely certain you will never use IPv6, you can go ahead and
+        install the package postgresql-9.1-ip4r or the appropriate package for your
+        Postgres version.</p>
+        <p>Get ip4r from CVS; <a class="reference external" href="http://pgfoundry.org/scm/?group_id=1000079">http://pgfoundry.org/scm/?group_id=1000079</a>
+        Once you have it, follow the instructions to have it installed on your machine.
+        It should be a simple matter of getting a few dev libs for postgresl via apt
+        and then ./configure &amp;&amp; make &amp;&amp; make install</p>
+    </div>
+    <div class="section" id="populating-the-database">
+        <h1>Populating the database</h1>
+        <p>The database needs to be populated with tables and a database user that the
+        nipapd daemon can authenticate as. This is unfortunately a manual task for now.
+        Hopefully it will soon be done through debians post-installation sciprint
+        infrastructure. Until then, you need to follow these steps.</p>
+        <p>Begin by creating a new database user. To administrate the Postgres database,
+        you typically sudo to root and then su to postgres, from where you can add the
+        new user:</p>
+        <pre class="literal-block">
+        sudo -i
+        su - postgres
+        createuser -S -R -D -W nipap
+        createdb -O nipap nipap
+        </pre>
+        <p>You'll be prompted for a new password when creating the user- remember it. Now
+        we need to populate the database with some tables and functions. In the ip4r
+        directory downloaded via CVS, there is a file called ip4r.sql that needs to be
+        run in for the 'nipap' database, again as the nipap user:</p>
+        <pre class="literal-block">
+        psql -d nipap -f &lt;path to ip4r.sql&gt;
+        </pre>
+        <p>Continue with the functions file followed by the tables:</p>
+        <pre class="literal-block">
+        psql -d nipap -f /usr/share/nipap/sql/functions.plsql
+        psql -d nipap -f /usr/share/nipap/sql/ip_net.plsql
+        </pre>
+        <p>Your database is now ready to go!</p>
+    </div>
+    <div class="section" id="running-nipapd">
+        <h1>Running nipapd</h1>
+        <p>Edit /etc/nipap/nipap.conf and fill in the database password that you set
+        earlier. Edit /etc/default/nipapd and set RUN=yes. Now you can go ahead and
+        start nipapd by executing <tt class="docutils literal">/etc/init.d/nipapd start</tt></p>
+        <p>nipapd ships with a default local authentication database with a user called
+        'guest' and with the password 'guest'. You can set up the CLI client to test
+        your new setup or continue to the web UI configuration to get the web up and
+        running.</p>
+    </div>
+    <div class="section" id="cli-configuration">
+        <h1>CLI configuration</h1>
+        <p>This is pretty easy, once you have the nipap-cli command installed, a new
+        command, 'nipap', is available to you. It reads .nipaprc in your home directory
+        and expects to find things like the host address of the nipapd and the
+        authentication credentials.</p>
+        <p>Here's an example .nipaprc that will work towards localhost with the default
+        guest login:</p>
+        <pre class="literal-block">
+        [global]
+        hostname = localhost
+        port     = 1337
+        username = guest
+        password = guest
+        default_schema = test
+        </pre>
+        <p>The last option sets which schema which is the default to work with if nothing
+        else is set. Schemas is an integral part of working with NIPAP and you can read
+        more about it in the user documentation. For now, let's create that test schema
+        so that you can work with it:</p>
+        <pre class="literal-block">
+        nipap schema add name test description &quot;My test schema&quot;
+        </pre>
+        <p>Now let's try adding a prefix too:</p>
+        <pre class="literal-block">
+        nipap address add prefix 192.0.2.0/24 type assignment description &quot;test prefix&quot;
+        </pre>
+        <p>And list everything covered by 0.0.0.0/0:</p>
+        <pre class="literal-block">
+        nipap address list 0/0
+        </pre>
+        <p>That wraps up this getting started guide, for more information see the manual
+        pages.</p>
     </div>
 </div>
 {% include footer.html %}
