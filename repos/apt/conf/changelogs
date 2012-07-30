@@ -35,11 +35,11 @@ fi
 
 # CHANGELOGDIR set means generate full hierachy
 # (clients need to set Apt::Changelogs::Server to use that)
-CHANGELOGDIR=changelogs
+#CHANGELOGDIR=changelogs
 
 # CHANGELOGDIR empty means generate changelog (and only changelog) files
 # in the new "third party site" place apt-get changelog is using as fallback:
-#CHANGELOGDIR=
+CHANGELOGDIR=
 
 # Set to avoid using some predefined TMPDIR or even /tmp as
 # tempdir:
