@@ -5,9 +5,14 @@
 <h1>Screenshots</h1>
 Here's a couple of screenshots from a test deployment.
 
-<p style="text-align: center; font-size: 1.0em; font-weight: bold;">A listing of schemas</p>
-<a href="screenshots/schema-list.png"><img src="screenshots/schema-list.png" width="780px"></a>
-<p style="font-size: 0.8em;">Schemas are roughly equal to a VRF in a router. Prefixes are unique inside each schema, so schemas typically represent a VRF but can also be used just to group addresses for whatever reason.</p>
+<p style="text-align: center; font-size: 1.0em; font-weight: bold;">A listing of VRFs</p>
+<a href="screenshots/vrf-list.png"><img src="screenshots/vrf-list.png" width="780px"></a>
+<p style="font-size: 0.8em;">VRFs can be used to document overlapping prefixes.</p>
+<br/><br/>
+
+<p style="text-align: center; font-size: 1.0em; font-weight: bold;">Prefix search</p>
+<a href="screenshots/search.png"><img src="screenshots/search.png" width="780px"></a>
+<p style="font-size: 0.8em;">A typical search. Matching prefixes are in black, grey prefixes are included for context. Notice the indentation for further helping the user understand the prefix structure.</p>
 <br/><br/>
 
 <p style="text-align: center; font-size: 1.0em; font-weight: bold;">Creating a new address pool.</p>
@@ -20,8 +25,4 @@ Here's a couple of screenshots from a test deployment.
 <p style="font-size: 0.8em;">For speedy assignment of new addresses, the user can request one from a pre-defined pool. This allows the end-user to be oblivious of which prefix he should pick his new assignment from, instead he can choose a pool and just get a prefix automatically assigned. An IP registry adminitrator can make sure that the pools don't run out of addresses.</p>
 <br/><br/>
 
-<p style="text-align: center; font-size: 1.0em; font-weight: bold;">Prefix search</p>
-<a href="screenshots/search.png"><img src="screenshots/search.png" width="780px"></a>
-<p style="font-size: 0.8em;">A typical search. Matching prefixes are in black, grey prefixes are included for context. Notice the indentation for further helping the user understand the prefix structure.</p>
-<br/><br/>
 {% include footer.html %}

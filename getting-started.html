@@ -82,7 +82,7 @@ and then make &amp;&amp; make install.</p>
 <h1>Populating the database</h1>
 <p>The database needs to be populated with tables and a database user that the
 nipapd daemon can authenticate as. This is unfortunately a manual task for now.
-Hopefully it will soon be done through debians post-installation sciprint
+Hopefully it will soon be done through debians post-installation scripting
 infrastructure. Until then, you need to follow these steps.</p>
 <p>Begin by creating a new database user. To administrate the Postgres database,
 you typically sudo to root and then su to postgres, from where you can add the
@@ -131,16 +131,11 @@ hostname = localhost
 port     = 1337
 username = guest
 password = guest
-default_schema = test
+default_vrf = none
 </pre>
-<p>The last option sets which schema which is the default to work with if nothing
-else is set. Schemas is an integral part of working with NIPAP and you can read
-more about it in the user documentation. For now, let's create that test schema
-so that you can work with it:</p>
-<pre class="literal-block">
-nipap schema add name test description &quot;My test schema&quot;
-</pre>
-<p>Now let's try adding a prefix too:</p>
+<p>The last option sets which VRF is the default to work with if nothing
+else is set.</p>
+<p>Let's try adding a prefix too:</p>
 <pre class="literal-block">
 nipap address add prefix 192.0.2.0/24 type assignment description &quot;test prefix&quot;
 </pre>
