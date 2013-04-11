@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>NIPAP API &mdash; NIPAP v1.0 documentation</title>
+    <title>NIPAP API &mdash; NIPAP 1.0 documentation</title>
+    
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="top" title="NIPAP 1.0 documentation" href="index.html" />
     <link rel="next" title="XML-RPC glue class" href="xmlrpc.html" />
     <link rel="prev" title="Design choices" href="design.html" /> 
   </head>
@@ -42,7 +45,7 @@
         <li class="right" >
           <a href="design.html" title="Design choices"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">NIPAP 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,36 +56,40 @@
             
   <span class="target" id="module-nipap.nipap"></span><div class="section" id="nipap-api">
 <h1>NIPAP API<a class="headerlink" href="#nipap-api" title="Permalink to this headline">¶</a></h1>
-<p>This module contains the Nipap class which provides most of the logic in NIPAP
-apart from that contained within the PostgreSQL database.</p>
-<p>NIPAP contains three types of objects: schemas, prefixes and pools.</p>
-<div class="section" id="schema">
-<h2>Schema<a class="headerlink" href="#schema" title="Permalink to this headline">¶</a></h2>
-<p>A schema can be thought of as a namespace for IP addresses, they make it
-possible to keep track of addresses that are used simultaneously in multiple
-parallell routing tables / VRFs. A typical example would be customer VPNs,
-where multiple customers are using the same RFC1918 addresses.  By far, most
-operations will be carried out in the &#8216;global&#8217; schema which contains addresses
-used on the Internet. Most API functions require a schema to be passed as
-the first argument.</p>
-<div class="section" id="schema-attributes">
-<h3>Schema attributes<a class="headerlink" href="#schema-attributes" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li><tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> - ID number of the schema.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> - A short name, such as &#8216;global&#8217;.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">description</span></tt> - A longer description of what the schema is used for.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">vrf</span></tt> - The VRF where the addresses in the schema is used.</li>
+<p>This module contains the Nipap class which provides most of the logic in
+NIPAP apart from that contained within the PostgreSQL database.</p>
+<p>NIPAP contains three types of objects: VRFs, prefixes and pools.</p>
+<div class="section" id="vrf">
+<h2>VRF<a class="headerlink" href="#vrf" title="Permalink to this headline">¶</a></h2>
+<p>A VRF represents a Virtual Routing and Forwarding instance. By default, one
+VRF which represents the global routing table (&#8220;no VRF&#8221;) is defined. This
+ID always has the ID 0.</p>
+<div class="section" id="vrf-attributes">
+<h3>VRF attributes<a class="headerlink" href="#vrf-attributes" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> - ID number of the VRF.</p>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="xref py py-attr docutils literal"><span class="pre">vrf</span></tt> - The VRF RDs administrator and assigned number subfields</dt>
+<dd><p class="first last">(eg. 65000:123).</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> - A short name, such as &#8216;VPN Customer A&#8217;.</p>
+</li>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">description</span></tt> - A longer description of what the VRF is used for.</p>
+</li>
 </ul>
 </div>
-<div class="section" id="schema-functions">
-<h3>Schema functions<a class="headerlink" href="#schema-functions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="vrf-functions">
+<h3>VRF functions<a class="headerlink" href="#vrf-functions" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li><a class="reference internal" href="#nipap.nipap.Nipap.list_schema" title="nipap.nipap.Nipap.list_schema"><tt class="xref py py-func docutils literal"><span class="pre">list_schema()</span></tt></a> - Return a list of schemas.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.add_schema" title="nipap.nipap.Nipap.add_schema"><tt class="xref py py-func docutils literal"><span class="pre">add_schema()</span></tt></a> - Create a new schema.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.edit_schema" title="nipap.nipap.Nipap.edit_schema"><tt class="xref py py-func docutils literal"><span class="pre">edit_schema()</span></tt></a> - Edit a schema.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.remove_schema" title="nipap.nipap.Nipap.remove_schema"><tt class="xref py py-func docutils literal"><span class="pre">remove_schema()</span></tt></a> - Remove a schema.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.search_schema" title="nipap.nipap.Nipap.search_schema"><tt class="xref py py-func docutils literal"><span class="pre">search_schema()</span></tt></a> - Search schemas from a specifically formatted dict.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_schema" title="nipap.nipap.Nipap.smart_search_schema"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_schema()</span></tt></a> - Search schemas from arbitarly formatted string.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.list_vrf" title="nipap.nipap.Nipap.list_vrf"><tt class="xref py py-func docutils literal"><span class="pre">list_vrf()</span></tt></a> - Return a list of VRFs.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.add_vrf" title="nipap.nipap.Nipap.add_vrf"><tt class="xref py py-func docutils literal"><span class="pre">add_vrf()</span></tt></a> - Create a new VRF.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.edit_vrf" title="nipap.nipap.Nipap.edit_vrf"><tt class="xref py py-func docutils literal"><span class="pre">edit_vrf()</span></tt></a> - Edit a VRF.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.remove_vrf" title="nipap.nipap.Nipap.remove_vrf"><tt class="xref py py-func docutils literal"><span class="pre">remove_vrf()</span></tt></a> - Remove a VRF.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.search_vrf" title="nipap.nipap.Nipap.search_vrf"><tt class="xref py py-func docutils literal"><span class="pre">search_vrf()</span></tt></a> - Search VRFs based on a formatted dict.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_vrf" title="nipap.nipap.Nipap.smart_search_vrf"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_vrf()</span></tt></a> - Search VRFs based on a query string.</li>
 </ul>
 </div>
 </div>
@@ -104,21 +111,27 @@ Host; prefix of max length within an assigment, assigned to an end host.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">family</span></tt> - Address family (integer 4 or 6). Set by NIPAP.</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">schema</span></tt> - ID number of the schema the prefix belongs to.</p>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">vrf_id</span></tt> - ID of the VRF which the prefix belongs to.</p>
+</li>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">vrf_rt</span></tt> - RT of the VRF which the prefix belongs to.</p>
+</li>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">vrf_name</span></tt> - Name of VRF which the prefix belongs to.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">description</span></tt> - A short description of the prefix.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">comment</span></tt> - A longer text describing the prefix and its use.</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">node</span></tt> - FQDN of node the prefix is assigned to, if type is host.</p>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">node</span></tt> - Name of the node on which the address is configured.</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">pool</span></tt> - ID of pool, if the prefix belongs to a pool.</p>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">pool_id</span></tt> - ID of pool, if the prefix belongs to a pool.</p>
+</li>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">pool_name</span></tt> - Name of pool, if the prefix belongs to a pool.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">type</span></tt> - Prefix type, string &#8216;reservation&#8217;, &#8216;assignment&#8217; or &#8216;host&#8217;.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">indent</span></tt> - Depth in prefix tree. Set by NIPAP.</p>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">country</span></tt> - Country where the prefix resides (two-letter country code).</p>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">country</span></tt> - Two letter country code where the prefix resides.</p>
 </li>
 <li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">order_id</span></tt> - Order identifier.</p>
 </li>
@@ -134,7 +147,7 @@ Host; prefix of max length within an assigment, assigned to an end host.</p>
 </dd>
 </dl>
 </li>
-<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">alarm_priority</span></tt> - String &#8216;low&#8217;, &#8216;medium&#8217; or &#8216;high&#8217;. Used by netwatch.</p>
+<li><p class="first"><tt class="xref py py-attr docutils literal"><span class="pre">alarm_priority</span></tt> - String &#8216;low&#8217;, &#8216;medium&#8217; or &#8216;high&#8217;.</p>
 </li>
 <li><dl class="first docutils">
 <dt><tt class="xref py py-attr docutils literal"><span class="pre">monitor</span></tt> - A boolean specifying whether the prefix should be</dt>
@@ -155,11 +168,11 @@ explanation.</p>
 <h3>Prefix functions<a class="headerlink" href="#prefix-functions" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference internal" href="#nipap.nipap.Nipap.list_prefix" title="nipap.nipap.Nipap.list_prefix"><tt class="xref py py-func docutils literal"><span class="pre">list_prefix()</span></tt></a> - Return a list of prefixes.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.add_prefix" title="nipap.nipap.Nipap.add_prefix"><tt class="xref py py-func docutils literal"><span class="pre">add_prefix()</span></tt></a> - Add a prefix. The prefix itself can be selected by Nipap.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.add_prefix" title="nipap.nipap.Nipap.add_prefix"><tt class="xref py py-func docutils literal"><span class="pre">add_prefix()</span></tt></a> - Add a prefix, more or less automatically.</li>
 <li><a class="reference internal" href="#nipap.nipap.Nipap.edit_prefix" title="nipap.nipap.Nipap.edit_prefix"><tt class="xref py py-func docutils literal"><span class="pre">edit_prefix()</span></tt></a> - Edit a prefix.</li>
 <li><a class="reference internal" href="#nipap.nipap.Nipap.remove_prefix" title="nipap.nipap.Nipap.remove_prefix"><tt class="xref py py-func docutils literal"><span class="pre">remove_prefix()</span></tt></a> - Remove a prefix.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" title="nipap.nipap.Nipap.search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">search_prefix()</span></tt></a> - Search prefixes from a specifically formatted dict.</li>
-<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_prefix" title="nipap.nipap.Nipap.smart_search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_prefix()</span></tt></a> - Search prefixes from arbitarly formatted string.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" title="nipap.nipap.Nipap.search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">search_prefix()</span></tt></a> - Search prefixes based on a formatted dict.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_prefix" title="nipap.nipap.Nipap.smart_search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_prefix()</span></tt></a> - Search prefixes based on a string.</li>
 </ul>
 </div>
 </div>
@@ -176,7 +189,6 @@ the pool if nothing else is given.</p>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">id</span></tt> - ID number of the pool.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> - A short name.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">description</span></tt> - A longer description of the pool.</li>
-<li><tt class="xref py py-attr docutils literal"><span class="pre">schema</span></tt> - ID number of the schema is it associated with.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">default_type</span></tt> - Default prefix type (see prefix types above.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">ipv4_default_prefix_length</span></tt> - Default prefix length of IPv4 prefixes.</li>
 <li><tt class="xref py py-attr docutils literal"><span class="pre">ipv6_default_prefix_length</span></tt> - Default prefix length of IPv6 prefixes.</li>
@@ -189,6 +201,30 @@ the pool if nothing else is given.</p>
 <li><a class="reference internal" href="#nipap.nipap.Nipap.add_pool" title="nipap.nipap.Nipap.add_pool"><tt class="xref py py-func docutils literal"><span class="pre">add_pool()</span></tt></a> - Add a pool.</li>
 <li><a class="reference internal" href="#nipap.nipap.Nipap.edit_pool" title="nipap.nipap.Nipap.edit_pool"><tt class="xref py py-func docutils literal"><span class="pre">edit_pool()</span></tt></a> - Edit a pool.</li>
 <li><a class="reference internal" href="#nipap.nipap.Nipap.remove_pool" title="nipap.nipap.Nipap.remove_pool"><tt class="xref py py-func docutils literal"><span class="pre">remove_pool()</span></tt></a> - Remove a pool.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.search_pool" title="nipap.nipap.Nipap.search_pool"><tt class="xref py py-func docutils literal"><span class="pre">search_pool()</span></tt></a> - Search pools based on a formatted dict.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_pool" title="nipap.nipap.Nipap.smart_search_pool"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_pool()</span></tt></a> - Search pools based on a string.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="asn">
+<h2>ASN<a class="headerlink" href="#asn" title="Permalink to this headline">¶</a></h2>
+<p>An ASN object represents an Autonomous System Number (ASN).</p>
+<div class="section" id="asn-attributes">
+<h3>ASN attributes<a class="headerlink" href="#asn-attributes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">asn</span></tt> - AS number.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">name</span></tt> - A name of the AS number.</li>
+</ul>
+</div>
+<div class="section" id="asn-functions">
+<h3>ASN functions<a class="headerlink" href="#asn-functions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="#nipap.nipap.Nipap.list_asn" title="nipap.nipap.Nipap.list_asn"><tt class="xref py py-func docutils literal"><span class="pre">list_asn()</span></tt></a> - Return a list of ASNs.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.add_asn" title="nipap.nipap.Nipap.add_asn"><tt class="xref py py-func docutils literal"><span class="pre">add_asn()</span></tt></a> - Add an ASN.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.edit_asn" title="nipap.nipap.Nipap.edit_asn"><tt class="xref py py-func docutils literal"><span class="pre">edit_asn()</span></tt></a> - Edit an ASN.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.remove_asn" title="nipap.nipap.Nipap.remove_asn"><tt class="xref py py-func docutils literal"><span class="pre">remove_asn()</span></tt></a> - Remove an ASN.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.search_asn" title="nipap.nipap.Nipap.search_asn"><tt class="xref py py-func docutils literal"><span class="pre">search_asn()</span></tt></a> - Search ASNs based on a formatted dict.</li>
+<li><a class="reference internal" href="#nipap.nipap.Nipap.smart_search_asn" title="nipap.nipap.Nipap.smart_search_asn"><tt class="xref py py-func docutils literal"><span class="pre">smart_search_asn()</span></tt></a> - Search ASNs based on a string.</li>
 </ul>
 </div>
 </div>
@@ -202,7 +238,7 @@ be thought of as primary keys for an object, such as a pool&#8217;s <tt class="x
 more or less any attribute in the spec, to be able to for example get all
 prefixes of family 6 with type reservation.</p>
 <p>The spec is a dict formatted as:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">schema_spec</span> <span class="o">=</span> <span class="p">{</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">vrf_spec</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;id&#39;</span><span class="p">:</span> <span class="mi">512</span>
 <span class="p">}</span>
 </pre></div>
@@ -249,9 +285,9 @@ value to the initializer.</p>
 instance, a database connection object is created which is used during
 the instance&#8217;s lifetime.</p>
 <dl class="method">
-<dt id="nipap.nipap.Nipap.add_pool">
-<tt class="descname">add_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a pool according to <cite>attr</cite>.</p>
+<dt id="nipap.nipap.Nipap.add_asn">
+<tt class="descname">add_asn</tt><big>(</big><em>auth</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add AS number to NIPAP.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -260,8 +296,23 @@ the instance&#8217;s lifetime.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
+<dt><cite>attr</cite> [asn_attr]</dt>
+<dd><p class="first last">ASN attributes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a dict describing the ASN which was added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.nipap.Nipap.add_pool">
+<tt class="descname">add_pool</tt><big>(</big><em>auth</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a pool according to <cite>attr</cite>.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [BaseAuth]</dt>
+<dd><p class="first last">AAA options.</p>
 </dd>
 </dl>
 </li>
@@ -272,23 +323,17 @@ the instance&#8217;s lifetime.</p>
 </dl>
 </li>
 </ul>
-<p>Returns ID of the added pool.</p>
+<p>Returns a dict describing the pool which was added.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.add_prefix">
-<tt class="descname">add_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>attr</em>, <em>args={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">add_prefix</tt><big>(</big><em>auth</em>, <em>attr</em>, <em>args={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a prefix and return its ID.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -305,7 +350,7 @@ the instance&#8217;s lifetime.</p>
 </dl>
 </li>
 </ul>
-<p>Returns ID of the added prefix.</p>
+<p>Returns a dict describing the prefix which was added.</p>
 <p>Prefixes can be added in three ways; manually, from a pool or
 from a prefix.</p>
 <dl class="docutils">
@@ -329,9 +374,9 @@ the <cite>args</cite> argument is to be formatted.</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.add_schema">
-<tt class="descname">add_schema</tt><big>(</big><em>auth</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a new network schema.</p>
+<dt id="nipap.nipap.Nipap.add_vrf">
+<tt class="descname">add_vrf</tt><big>(</big><em>auth</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.add_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new VRF.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -340,30 +385,35 @@ the <cite>args</cite> argument is to be formatted.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>attr</cite> [schema_attr]</dt>
-<dd><p class="first last">The news schema&#8217;s attributes.</p>
+<dt><cite>attr</cite> [vrf_attr]</dt>
+<dd><p class="first last">The news VRF&#8217;s attributes.</p>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Add a schema based on the values stored in the inputted attr dict.</p>
-<p>Returns the ID of the added schema.</p>
+<p>Add a VRF based on the values stored in the <cite>attr</cite> dict.</p>
+<p>Returns a dict describing the VRF which was added.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.nipap.Nipap.edit_asn">
+<tt class="descname">edit_asn</tt><big>(</big><em>auth</em>, <em>asn</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit AS number</p>
+<ul class="simple">
+<li><cite>auth</cite> [BaseAuth] AAA options.</li>
+<li><cite>asn</cite> [integer] AS number to edit.</li>
+<li><cite>attr</cite> [asn_attr] New AS attributes.</li>
+</ul>
 </dd></dl>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.edit_pool">
-<tt class="descname">edit_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_pool" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">edit_pool</tt><big>(</big><em>auth</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update pool given by <cite>spec</cite> with attributes <cite>attr</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -384,18 +434,12 @@ the <cite>args</cite> argument is to be formatted.</dd>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.edit_prefix">
-<tt class="descname">edit_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">edit_prefix</tt><big>(</big><em>auth</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Update prefix matching <cite>spec</cite> with attributes <cite>attr</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -412,13 +456,15 @@ the <cite>args</cite> argument is to be formatted.</dd>
 </dl>
 </li>
 </ul>
-<p>Note that a prefix&#8217;s type or schema can not be changed.</p>
+<p>Note that there are restrictions on when and how a prefix&#8217;s type
+can be changed; reservations can be changed to assignments and vice
+versa, but only if they contain no child prefixes.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.edit_schema">
-<tt class="descname">edit_schema</tt><big>(</big><em>auth</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Updata schema matching <cite>spec</cite> with attributes <cite>attr</cite>.</p>
+<dt id="nipap.nipap.Nipap.edit_vrf">
+<tt class="descname">edit_vrf</tt><big>(</big><em>auth</em>, <em>spec</em>, <em>attr</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.edit_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update VRFs matching <cite>spec</cite> with attributes <cite>attr</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -427,13 +473,13 @@ the <cite>args</cite> argument is to be formatted.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Schema specification.</p>
+<dt><cite>spec</cite> [vrf_spec]</dt>
+<dd><p class="first last">Attibutes specifying what VRF to edit.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>attr</cite> [schema_attr]</dt>
+<dt><cite>attr</cite> [vrf_attr]</dt>
 <dd><p class="first last">Dict specifying fields to be updated and their new values.</p>
 </dd>
 </dl>
@@ -443,7 +489,7 @@ the <cite>args</cite> argument is to be formatted.</dd>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.find_free_prefix">
-<tt class="descname">find_free_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>args</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.find_free_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">find_free_prefix</tt><big>(</big><em>auth</em>, <em>vrf</em>, <em>args</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.find_free_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds free prefixes in the sources given in <cite>args</cite>.</p>
 <ul>
 <li><dl class="first docutils">
@@ -453,8 +499,9 @@ the <cite>args</cite> argument is to be formatted.</dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
+<dt><cite>vrf</cite> [vrf]</dt>
+<dd><p class="first last">Full VRF-dict specifying in which VRF the prefix should be
+unique.</p>
 </dd>
 </dl>
 </li>
@@ -505,19 +552,19 @@ sources.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="nipap.nipap.Nipap.list_asn">
+<tt class="descname">list_asn</tt><big>(</big><em>auth</em>, <em>asn={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>List AS numbers</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="nipap.nipap.Nipap.list_pool">
-<tt class="descname">list_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_pool" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">list_pool</tt><big>(</big><em>auth</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a list of pools.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -533,18 +580,12 @@ sources.</p>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.list_prefix">
-<tt class="descname">list_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">list_prefix</tt><big>(</big><em>auth</em>, <em>spec=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>List prefixes matching the <cite>spec</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -562,9 +603,9 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.list_schema">
-<tt class="descname">list_schema</tt><big>(</big><em>auth</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a list of schemas matching <cite>spec</cite>.</p>
+<dt id="nipap.nipap.Nipap.list_vrf">
+<tt class="descname">list_vrf</tt><big>(</big><em>auth</em>, <em>spec={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.list_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of VRFs matching <cite>spec</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -573,8 +614,8 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>spec</cite> [schema_spec]</dt>
-<dd><p class="first last">A schema specification. If omitted, all schemas are returned.</p>
+<dt><cite>spec</cite> [vrf_spec]</dt>
+<dd><p class="first last">A VRF specification. If omitted, all VRFs are returned.</p>
 </dd>
 </dl>
 </li>
@@ -583,19 +624,19 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 </dd></dl>
 
 <dl class="method">
+<dt id="nipap.nipap.Nipap.remove_asn">
+<tt class="descname">remove_asn</tt><big>(</big><em>auth</em>, <em>asn</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove AS number</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="nipap.nipap.Nipap.remove_pool">
-<tt class="descname">remove_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_pool" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">remove_pool</tt><big>(</big><em>auth</em>, <em>spec</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove a pool.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -610,18 +651,12 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.remove_prefix">
-<tt class="descname">remove_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>spec</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">remove_prefix</tt><big>(</big><em>auth</em>, <em>spec</em>, <em>recursive=False</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove prefix matching <cite>spec</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -635,9 +670,9 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.remove_schema">
-<tt class="descname">remove_schema</tt><big>(</big><em>auth</em>, <em>spec</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove a schema.</p>
+<dt id="nipap.nipap.Nipap.remove_vrf">
+<tt class="descname">remove_vrf</tt><big>(</big><em>auth</em>, <em>spec</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.remove_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a VRF.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -646,29 +681,83 @@ see the <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" ti
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>spec</cite> [schema_spec]</dt>
-<dd><p class="first last">A schema specification.</p>
+<dt><cite>spec</cite> [vrf_spec]</dt>
+<dd><p class="first last">A VRF specification.</p>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Remove schema matching the <cite>spec</cite> argument.</p>
+<p>Remove VRF matching the <cite>spec</cite> argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.nipap.Nipap.search_asn">
+<tt class="descname">search_asn</tt><big>(</big><em>auth</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search ASNs for entries matching &#8216;query&#8217;</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [BaseAuth]</dt>
+<dd><p class="first last">AAA options.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [dict_to_sql]</dt>
+<dd><p class="first last">How the search should be performed.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [options_dict]</dt>
+<dd><p class="first last">Search options, see below.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a list of dicts.</p>
+<p>The <cite>query</cite> argument passed to this function is designed to be
+able to specify how quite advanced search operations should be
+performed in a generic format. It is internally expanded to a SQL
+WHERE-clause.</p>
+<p>The <cite>query</cite> is a dict with three elements, where one specifies the
+operation to perform and the two other specifies its arguments. The
+arguments can themselves be <cite>query</cite> dicts, to build more complex
+queries.</p>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">operator</span></tt> key specifies what operator should be used for the
+comparison. Currently the following operators are supported:</p>
+<ul class="simple">
+<li><tt class="xref py py-data docutils literal"><span class="pre">and</span></tt> - Logical AND</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">or</span></tt> - Logical OR</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">equals</span></tt> - Equality; =</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">not_equals</span></tt> - Inequality; !=</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">like</span></tt> - SQL LIKE</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">regex_match</span></tt> - Regular expression match</li>
+<li><tt class="xref py py-data docutils literal"><span class="pre">regex_not_match</span></tt> - Regular expression not match</li>
+</ul>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">val1</span></tt> and <tt class="xref py py-attr docutils literal"><span class="pre">val2</span></tt> keys specifies the values which are subjected
+to the comparison. <tt class="xref py py-attr docutils literal"><span class="pre">val1</span></tt> can be either any prefix attribute or an
+entire query dict. <tt class="xref py py-attr docutils literal"><span class="pre">val2</span></tt> can be either the value you want to
+compare the prefix attribute to, or an entire <cite>query</cite> dict.</p>
+<p>The search options can also be used to limit the number of rows
+returned or set an offset for the result.</p>
+<dl class="docutils">
+<dt>The following options are available:</dt>
+<dd><ul class="first last simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">max_result</span></tt> - The maximum number of prefixes to return (default <tt class="xref py py-data docutils literal"><span class="pre">50</span></tt>).</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">offset</span></tt> - Offset the result list this many prefixes (default <tt class="xref py py-data docutils literal"><span class="pre">0</span></tt>).</li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.search_pool">
-<tt class="descname">search_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_pool" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">search_pool</tt><big>(</big><em>auth</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_pool" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search pool list for pools matching <cite>query</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -753,18 +842,12 @@ returned or set an offset for the result.</p>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.search_prefix">
-<tt class="descname">search_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">search_prefix</tt><big>(</big><em>auth</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Search prefix list for prefixes matching <cite>query</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -875,9 +958,9 @@ need to implement client side IP address logic.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.search_schema">
-<tt class="descname">search_schema</tt><big>(</big><em>auth</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Search schema list for schemas matching <cite>query</cite>.</p>
+<dt id="nipap.nipap.Nipap.search_vrf">
+<tt class="descname">search_vrf</tt><big>(</big><em>auth</em>, <em>query</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.search_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search VRF list for VRFs matching <cite>query</cite>.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -922,18 +1005,18 @@ comparison. Currently the following operators are supported:</p>
 to the comparison. <tt class="xref py py-attr docutils literal"><span class="pre">val1</span></tt> can be either any prefix attribute or an
 entire query dict. <tt class="xref py py-attr docutils literal"><span class="pre">val2</span></tt> can be either the value you want to
 compare the prefix attribute to, or an entire <cite>query</cite> dict.</p>
-<p>Example 1 - Find the schema whose name match &#8216;test&#8217;:</p>
+<p>Example 1 - Find the VRF whose VRF match &#8216;65000:123&#8217;:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;operator&#39;</span><span class="p">:</span> <span class="s">&#39;equals&#39;</span><span class="p">,</span>
-    <span class="s">&#39;val1&#39;</span><span class="p">:</span> <span class="s">&#39;name&#39;</span><span class="p">,</span>
-    <span class="s">&#39;val2&#39;</span><span class="p">:</span> <span class="s">&#39;test&#39;</span>
+    <span class="s">&#39;val1&#39;</span><span class="p">:</span> <span class="s">&#39;vrf&#39;</span><span class="p">,</span>
+    <span class="s">&#39;val2&#39;</span><span class="p">:</span> <span class="s">&#39;65000:123&#39;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>This will be expanded to the pseudo-SQL query:</p>
-<div class="highlight-python"><pre>SELECT * FROM schema WHERE name = 'test'</pre>
+<div class="highlight-python"><pre>SELECT * FROM vrf WHERE vrf = '65000:123'</pre>
 </div>
-<p>Example 2 - Find schema whose name or description regex matches &#8216;test&#8217;:</p>
+<p>Example 2 - Find vrf whose name or description regex matches &#8216;test&#8217;:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">query</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;operator&#39;</span><span class="p">:</span> <span class="s">&#39;or&#39;</span><span class="p">,</span>
     <span class="s">&#39;val1&#39;</span><span class="p">:</span> <span class="p">{</span>
@@ -950,7 +1033,7 @@ compare the prefix attribute to, or an entire <cite>query</cite> dict.</p>
 </pre></div>
 </div>
 <p>This will be expanded to the pseudo-SQL query:</p>
-<div class="highlight-python"><pre>SELECT * FROM schema WHERE name ~* 'test' OR description ~* 'test'</pre>
+<div class="highlight-python"><pre>SELECT * FROM vrf WHERE name ~* 'test' OR description ~* 'test'</pre>
 </div>
 <p>The search options can also be used to limit the number of rows
 returned or set an offset for the result.</p>
@@ -965,9 +1048,9 @@ returned or set an offset for the result.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.smart_search_pool">
-<tt class="descname">smart_search_pool</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>query_str</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a smart search on pool list.</p>
+<dt id="nipap.nipap.Nipap.smart_search_asn">
+<tt class="descname">smart_search_asn</tt><big>(</big><em>auth</em>, <em>query_str</em>, <em>search_options={}</em>, <em>extra_query=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search operation among AS numbers</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -976,8 +1059,54 @@ returned or set an offset for the result.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
+<dt><cite>query_str</cite> [string]</dt>
+<dd><p class="first last">Search string</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [options_dict]</dt>
+<dd><p class="first last">Search options. See <a class="reference internal" href="#nipap.nipap.Nipap.search_asn" title="nipap.nipap.Nipap.search_asn"><tt class="xref py py-func docutils literal"><span class="pre">search_asn()</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>extra_query</cite> [dict_to_sql]</dt>
+<dd><p class="first last">Extra search terms, will be AND:ed together with what is
+extracted from the query string.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<dl class="docutils">
+<dt>Return a dict with three elements:</dt>
+<dd><ul class="first simple">
+<li><tt class="xref py py-attr docutils literal"><span class="pre">interpretation</span></tt> - How the query string was interpreted.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">search_options</span></tt> - Various search_options.</li>
+<li><tt class="xref py py-attr docutils literal"><span class="pre">result</span></tt> - The search result.</li>
+</ul>
+<p>The <tt class="xref py py-attr docutils literal"><span class="pre">interpretation</span></tt> is given as a list of dicts, each
+explaining how a part of the search key was interpreted (ie. what
+ASN attribute the search operation was performed on).</p>
+<p class="last">The <tt class="xref py py-attr docutils literal"><span class="pre">result</span></tt> is a list of dicts containing the search result.</p>
+</dd>
+</dl>
+<p>The smart search function tries to convert the query from a text
+string to a <cite>query</cite> dict which is passed to the
+<a class="reference internal" href="#nipap.nipap.Nipap.search_asn" title="nipap.nipap.Nipap.search_asn"><tt class="xref py py-func docutils literal"><span class="pre">search_asn()</span></tt></a> function.  If multiple search keys are
+detected, they are combined with a logical AND.</p>
+<p>See the <a class="reference internal" href="#nipap.nipap.Nipap.search_asn" title="nipap.nipap.Nipap.search_asn"><tt class="xref py py-func docutils literal"><span class="pre">search_asn()</span></tt></a> function for an explanation of the
+<cite>search_options</cite> argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.nipap.Nipap.smart_search_pool">
+<tt class="descname">smart_search_pool</tt><big>(</big><em>auth</em>, <em>query_str</em>, <em>search_options={}</em>, <em>extra_query=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search on pool list.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [BaseAuth]</dt>
+<dd><p class="first last">AAA options.</p>
 </dd>
 </dl>
 </li>
@@ -990,6 +1119,13 @@ returned or set an offset for the result.</p>
 <li><dl class="first docutils">
 <dt><cite>search_options</cite> [options_dict]</dt>
 <dd><p class="first last">Search options. See <a class="reference internal" href="#nipap.nipap.Nipap.search_pool" title="nipap.nipap.Nipap.search_pool"><tt class="xref py py-func docutils literal"><span class="pre">search_pool()</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>extra_query</cite> [dict_to_sql]</dt>
+<dd><p class="first last">Extra search terms, will be AND:ed together with what is
+extracted from the query string.</p>
 </dd>
 </dl>
 </li>
@@ -1019,18 +1155,12 @@ against the name or description column with regex match.</p>
 
 <dl class="method">
 <dt id="nipap.nipap.Nipap.smart_search_prefix">
-<tt class="descname">smart_search_prefix</tt><big>(</big><em>auth</em>, <em>schema_spec</em>, <em>query_str</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_prefix" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">smart_search_prefix</tt><big>(</big><em>auth</em>, <em>query_str</em>, <em>search_options={}</em>, <em>extra_query=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_prefix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a smart search on prefix list.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
 <dd><p class="first last">AAA options.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema_spec</cite> [schema_spec]</dt>
-<dd><p class="first last">Specifies what schema we are working within.</p>
 </dd>
 </dl>
 </li>
@@ -1043,6 +1173,13 @@ against the name or description column with regex match.</p>
 <li><dl class="first docutils">
 <dt><cite>search_options</cite> [options_dict]</dt>
 <dd><p class="first last">Search options. See <a class="reference internal" href="#nipap.nipap.Nipap.search_prefix" title="nipap.nipap.Nipap.search_prefix"><tt class="xref py py-func docutils literal"><span class="pre">search_prefix()</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>extra_query</cite> [dict_to_sql]</dt>
+<dd><p class="first last">Extra search terms, will be AND:ed together with what is
+extracted from the query string.</p>
 </dd>
 </dl>
 </li>
@@ -1072,9 +1209,9 @@ forth.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.nipap.Nipap.smart_search_schema">
-<tt class="descname">smart_search_schema</tt><big>(</big><em>auth</em>, <em>query_str</em>, <em>search_options={}</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a smart search on schema list.</p>
+<dt id="nipap.nipap.Nipap.smart_search_vrf">
+<tt class="descname">smart_search_vrf</tt><big>(</big><em>auth</em>, <em>query_str</em>, <em>search_options={}</em>, <em>extra_query=None</em><big>)</big><a class="headerlink" href="#nipap.nipap.Nipap.smart_search_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search on VRF list.</p>
 <ul>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [BaseAuth]</dt>
@@ -1090,7 +1227,14 @@ forth.</p>
 </li>
 <li><dl class="first docutils">
 <dt><cite>search_options</cite> [options_dict]</dt>
-<dd><p class="first last">Search options. See <a class="reference internal" href="#nipap.nipap.Nipap.search_schema" title="nipap.nipap.Nipap.search_schema"><tt class="xref py py-func docutils literal"><span class="pre">search_schema()</span></tt></a>.</p>
+<dd><p class="first last">Search options. See <a class="reference internal" href="#nipap.nipap.Nipap.search_vrf" title="nipap.nipap.Nipap.search_vrf"><tt class="xref py py-func docutils literal"><span class="pre">search_vrf()</span></tt></a>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>extra_query</cite> [dict_to_sql]</dt>
+<dd><p class="first last">Extra search terms, will be AND:ed together with what is
+extracted from the query string.</p>
 </dd>
 </dl>
 </li>
@@ -1104,18 +1248,18 @@ forth.</p>
 </ul>
 <p>The <tt class="xref py py-attr docutils literal"><span class="pre">interpretation</span></tt> is given as a list of dicts, each
 explaining how a part of the search key was interpreted (ie. what
-schema attribute the search operation was performed on).</p>
+VRF attribute the search operation was performed on).</p>
 <p class="last">The <tt class="xref py py-attr docutils literal"><span class="pre">result</span></tt> is a list of dicts containing the search result.</p>
 </dd>
 </dl>
 <p>The smart search function tries to convert the query from a text
 string to a <cite>query</cite> dict which is passed to the
-<a class="reference internal" href="#nipap.nipap.Nipap.search_schema" title="nipap.nipap.Nipap.search_schema"><tt class="xref py py-func docutils literal"><span class="pre">search_schema()</span></tt></a> function.  If multiple search keys are
+<a class="reference internal" href="#nipap.nipap.Nipap.search_vrf" title="nipap.nipap.Nipap.search_vrf"><tt class="xref py py-func docutils literal"><span class="pre">search_vrf()</span></tt></a> function.  If multiple search keys are
 detected, they are combined with a logical AND.</p>
 <p>It will basically just take each search term and try to match it
 against the name or description column with regex match or the VRF
 column with an exact match.</p>
-<p>See the <a class="reference internal" href="#nipap.nipap.Nipap.search_schema" title="nipap.nipap.Nipap.search_schema"><tt class="xref py py-func docutils literal"><span class="pre">search_schema()</span></tt></a> function for an explanation of the
+<p>See the <a class="reference internal" href="#nipap.nipap.Nipap.search_vrf" title="nipap.nipap.Nipap.search_vrf"><tt class="xref py py-func docutils literal"><span class="pre">search_vrf()</span></tt></a> function for an explanation of the
 <cite>search_options</cite> argument.</p>
 </dd></dl>
 
@@ -1125,7 +1269,7 @@ column with an exact match.</p>
 <dt id="nipap.nipap.NipapDuplicateError">
 <em class="property">exception </em><tt class="descclassname">nipap.nipap.</tt><tt class="descname">NipapDuplicateError</tt><a class="headerlink" href="#nipap.nipap.NipapDuplicateError" title="Permalink to this definition">¶</a></dt>
 <dd><p>The passed object violates unique constraints</p>
-<p>For example, create a schema with a name of an already existing one.</p>
+<p>For example, create a VRF with a name of an already existing one.</p>
 </dd></dl>
 
 <dl class="exception">
@@ -1187,9 +1331,9 @@ column with an exact match.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">NIPAP API</a><ul>
-<li><a class="reference internal" href="#schema">Schema</a><ul>
-<li><a class="reference internal" href="#schema-attributes">Schema attributes</a></li>
-<li><a class="reference internal" href="#schema-functions">Schema functions</a></li>
+<li><a class="reference internal" href="#vrf">VRF</a><ul>
+<li><a class="reference internal" href="#vrf-attributes">VRF attributes</a></li>
+<li><a class="reference internal" href="#vrf-functions">VRF functions</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#prefix">Prefix</a><ul>
@@ -1200,6 +1344,11 @@ column with an exact match.</p>
 <li><a class="reference internal" href="#pool">Pool</a><ul>
 <li><a class="reference internal" href="#pool-attributes">Pool attributes</a></li>
 <li><a class="reference internal" href="#pool-functions">Pool functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#asn">ASN</a><ul>
+<li><a class="reference internal" href="#asn-attributes">ASN attributes</a></li>
+<li><a class="reference internal" href="#asn-functions">ASN functions</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#the-spec">The &#8216;spec&#8217;</a></li>
@@ -1218,7 +1367,7 @@ column with an exact match.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1247,12 +1396,12 @@ column with an exact match.</p>
         <li class="right" >
           <a href="design.html" title="Design choices"
              >previous</a> |</li>
-        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">NIPAP 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

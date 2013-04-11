@@ -3,13 +3,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>XML-RPC glue class &mdash; NIPAP v1.0 documentation</title>
+    <title>XML-RPC glue class &mdash; NIPAP 1.0 documentation</title>
+    
     <link rel="stylesheet" href="static/default.css" type="text/css" />
     <link rel="stylesheet" href="static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="static/jquery.js"></script>
     <script type="text/javascript" src="static/underscore.js"></script>
     <script type="text/javascript" src="static/doctools.js"></script>
-    <link rel="top" title="NIPAP v1.0 documentation" href="index.html" />
+    <link rel="top" title="NIPAP 1.0 documentation" href="index.html" />
     <link rel="next" title="Authentication library" href="authlib.html" />
     <link rel="prev" title="NIPAP API" href="nipap.html" /> 
   </head>
@@ -42,7 +45,7 @@
         <li class="right" >
           <a href="nipap.html" title="NIPAP API"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">NIPAP 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -75,9 +78,9 @@ authentication system works.</p>
 <em class="property">class </em><tt class="descclassname">nipap.xmlrpc.</tt><tt class="descname">NipapProtocol</tt><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to allow XML-RPC access to the lovely NIPAP system.</p>
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool">
-<tt class="descname">xmlrpc_add_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a pool.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_asn">
+<tt class="descname">xmlrpc_add_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new ASN.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -87,8 +90,24 @@ authentication system works.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">ASN attributes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns the ASN.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool">
+<tt class="descname">xmlrpc_add_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a pool.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
 </dd>
 </dl>
 </li>
@@ -115,12 +134,6 @@ authentication system works.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>attr</cite> [struct]</dt>
 <dd><p class="first last">Attributes to set on the new prefix.</p>
 </dd>
@@ -138,9 +151,9 @@ it should be allocated from.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_schema">
-<tt class="descname">xmlrpc_add_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Add a new network schema.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_add_vrf">
+<tt class="descname">xmlrpc_add_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_add_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a new VRF.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -151,12 +164,12 @@ it should be allocated from.</p>
 </li>
 <li><dl class="first docutils">
 <dt><cite>attr</cite> [struct]</dt>
-<dd><p class="first last">Schema attributes.</p>
+<dd><p class="first last">VRF attributes.</p>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Returns the schema ID.</p>
+<p>Returns the internal database ID for the VRF.</p>
 </dd></dl>
 
 <dl class="method">
@@ -184,9 +197,9 @@ it should be allocated from.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool">
-<tt class="descname">xmlrpc_edit_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Edit pool.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_asn">
+<tt class="descname">xmlrpc_edit_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit an ASN.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -196,8 +209,29 @@ it should be allocated from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
+<dt><cite>asn</cite> [integer]</dt>
+<dd><p class="first last">An integer specifying which ASN to edit.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>attr</cite> [struct]</dt>
+<dd><p class="first last">ASN attributes.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool">
+<tt class="descname">xmlrpc_edit_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit pool.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
 </dd>
 </dl>
 </li>
@@ -229,12 +263,6 @@ it should be allocated from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>prefix</cite> [struct]</dt>
 <dd><p class="first last">Prefix attributes which describes what prefix(es) to edit.</p>
 </dd>
@@ -250,9 +278,9 @@ it should be allocated from.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_schema">
-<tt class="descname">xmlrpc_edit_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Edit a schema.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_edit_vrf">
+<tt class="descname">xmlrpc_edit_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_edit_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Edit a VRF.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -262,14 +290,14 @@ it should be allocated from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">A schema spec specifying which schema(s) to edit.</p>
+<dt><cite>vrf</cite> [struct]</dt>
+<dd><p class="first last">A VRF spec specifying which VRF(s) to edit.</p>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
 <dt><cite>attr</cite> [struct]</dt>
-<dd><p class="first last">Schema attributes.</p>
+<dd><p class="first last">VRF attributes.</p>
 </dd>
 </dl>
 </li>
@@ -289,12 +317,6 @@ it should be allocated from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>args</cite> [struct]</dt>
 <dd><p class="first last">Arguments for the find_free_prefix-function such as what prefix
 or pool to allocate from.</p>
@@ -302,6 +324,28 @@ or pool to allocate from.</p>
 </dl>
 </li>
 </ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_asn">
+<tt class="descname">xmlrpc_list_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>List ASNs.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>asn</cite> [struct]</dt>
+<dd><p class="first last">Specifies ASN attributes to match (optional).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a list of ASNs matching the ASN spec as a list of structs.</p>
 </dd></dl>
 
 <dl class="method">
@@ -313,12 +357,6 @@ or pool to allocate from.</p>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [struct]</dt>
 <dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
 </dd>
 </dl>
 </li>
@@ -345,12 +383,6 @@ or pool to allocate from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>prefix</cite> [struct]</dt>
 <dd><p class="first last">Prefix attributes to match.</p>
 </dd>
@@ -361,9 +393,9 @@ or pool to allocate from.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_schema">
-<tt class="descname">xmlrpc_list_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>List schemas.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_list_vrf">
+<tt class="descname">xmlrpc_list_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_list_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>List VRFs.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -373,13 +405,34 @@ or pool to allocate from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Specifies schema attributes to match (optional).</p>
+<dt><cite>vrf</cite> [struct]</dt>
+<dd><p class="first last">Specifies VRF attributes to match (optional).</p>
 </dd>
 </dl>
 </li>
 </ul>
-<p>Returns a list of structs matching the schema spec.</p>
+<p>Returns a list of structs matching the VRF spec.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_asn">
+<tt class="descname">xmlrpc_remove_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes an ASN.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>asn</cite> [integer]</dt>
+<dd><p class="first last">An ASN.</p>
+</dd>
+</dl>
+</li>
+</ul>
 </dd></dl>
 
 <dl class="method">
@@ -391,12 +444,6 @@ or pool to allocate from.</p>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [struct]</dt>
 <dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
 </dd>
 </dl>
 </li>
@@ -422,12 +469,6 @@ or pool to allocate from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>prefix</cite> [struct]</dt>
 <dd><p class="first last">Attributes used to select what prefix to remove.</p>
 </dd>
@@ -437,9 +478,9 @@ or pool to allocate from.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_schema">
-<tt class="descname">xmlrpc_remove_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Removes a schema.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_remove_vrf">
+<tt class="descname">xmlrpc_remove_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_remove_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Removes a VRF.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -449,12 +490,42 @@ or pool to allocate from.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">A schema spec.</p>
+<dt><cite>vrf</cite> [struct]</dt>
+<dd><p class="first last">A VRF spec.</p>
 </dd>
 </dl>
 </li>
 </ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_asn">
+<tt class="descname">xmlrpc_search_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search ASNs.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>query</cite> [struct]</dt>
+<dd><p class="first last">A struct specifying the search query.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result and the search options
+used.</p>
 </dd></dl>
 
 <dl class="method">
@@ -466,12 +537,6 @@ or pool to allocate from.</p>
 <li><dl class="first docutils">
 <dt><cite>auth</cite> [struct]</dt>
 <dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
 </dd>
 </dl>
 </li>
@@ -506,12 +571,6 @@ used.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
 <dt><cite>query</cite> [struct]</dt>
 <dd><p class="first last">A struct specifying the search query.</p>
 </dd>
@@ -530,9 +589,9 @@ search options used.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_schema">
-<tt class="descname">xmlrpc_search_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_schema" title="Permalink to this definition">¶</a></dt>
-<dd><p>Search for schemas.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_search_vrf">
+<tt class="descname">xmlrpc_search_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_search_vrf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Search for VRFs.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -560,9 +619,9 @@ used.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool">
-<tt class="descname">xmlrpc_smart_search_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool" title="Permalink to this definition">¶</a></dt>
-<dd><p>Perform a smart search.</p>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_asn">
+<tt class="descname">xmlrpc_smart_search_asn</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_asn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search among ASNs.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
 <li><dl class="first docutils">
@@ -572,8 +631,32 @@ used.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
+<dt><cite>query_string</cite> [string]</dt>
+<dd><p class="first last">The search string.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><cite>search_options</cite> [struct]</dt>
+<dd><p class="first last">Options for the search query, such as limiting the number
+of results returned.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Returns a struct containing search result, interpretation of the
+search string and the search options used.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool">
+<tt class="descname">xmlrpc_smart_search_pool</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform a smart search.</p>
+<p>Valid keys in the <cite>args</cite>-struct:</p>
+<ul>
+<li><dl class="first docutils">
+<dt><cite>auth</cite> [struct]</dt>
+<dd><p class="first last">Authentication options passed to the <tt class="xref py py-class docutils literal"><span class="pre">AuthFactory</span></tt>.</p>
 </dd>
 </dl>
 </li>
@@ -608,13 +691,7 @@ query string and the search options used.</p>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><cite>schema</cite> [struct]</dt>
-<dd><p class="first last">Schema to work in.</p>
-</dd>
-</dl>
-</li>
-<li><dl class="first docutils">
-<dt><cite>query</cite> [string]</dt>
+<dt><cite>query_string</cite> [string]</dt>
 <dd><p class="first last">The search string.</p>
 </dd>
 </dl>
@@ -626,14 +703,21 @@ of results returned.</p>
 </dd>
 </dl>
 </li>
+<li><dl class="first docutils">
+<dt><cite>extra_query</cite> [struct]</dt>
+<dd><p class="first last">Extra search terms, will be AND:ed together with what is
+extracted from the query string.</p>
+</dd>
+</dl>
+</li>
 </ul>
 <p>Returns a struct containing search result, interpretation of the
 query string and the search options used.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_schema">
-<tt class="descname">xmlrpc_smart_search_schema</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_schema" title="Permalink to this definition">¶</a></dt>
+<dt id="nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_vrf">
+<tt class="descname">xmlrpc_smart_search_vrf</tt><big>(</big><em>args</em><big>)</big><a class="headerlink" href="#nipap.xmlrpc.NipapProtocol.xmlrpc_smart_search_vrf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform a smart search.</p>
 <p>Valid keys in the <cite>args</cite>-struct:</p>
 <ul>
@@ -690,7 +774,7 @@ search string and the search options used.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -719,12 +803,12 @@ search string and the search options used.</p>
         <li class="right" >
           <a href="nipap.html" title="NIPAP API"
              >previous</a> |</li>
-        <li><a href="index.html">NIPAP v1.0 documentation</a> &raquo;</li> 
+        <li><a href="index.html">NIPAP 1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
         &copy; Copyright 2011, Kristian Larsson &lt;kll@tele2.net&gt;, Lukas Garberg &lt;lukas@tele2.net&gt;.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>
