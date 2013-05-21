@@ -42,6 +42,38 @@ Description: IPv4 and IPv4 range index types for PostgreSQL 8.4
    ip4   - a single IPv4 address
    ip4r  - an arbitrary range of IPv4 addresses
 
+Package: postgresql-9.1-ip4r
+Source: ip4r
+Version: 2.0-1
+Architecture: amd64
+Maintainer: Christoph Berg <myon@debian.org>
+Installed-Size: 310
+Depends: libc6 (>= 2.4), postgresql-9.1
+Homepage: http://pgfoundry.org/projects/ip4r/
+Priority: extra
+Section: misc
+Filename: pool/extra/i/ip4r/postgresql-9.1-ip4r_2.0-1_amd64.deb
+Size: 74308
+SHA256: 80b39b28081d12a43e4c7a67e562657eca472494cc97bb08d1c38d5ea55dfdd6
+SHA1: 01cc459d799ffdaa9f3e7fd050e1f8e5834457bb
+MD5sum: cf5ccae98fe39f9f152fe1d723fe187a
+Description: IPv4 and IPv6 types for PostgreSQL 9.1
+ This PostgreSQL module provides several data types which can contain
+ single IPv4 or IPv6 addresses or a range of such addresses.
+ .
+ ip4r supports these data types:
+ .
+  ip4:       IPv4 address '#.#.#.#'
+  ip4r:      IPv4 range '#.#.#.#-#.#.#.#' or '#.#.#.#/#' or '#.#.#.#'
+  ip6:       IPv6 address 'xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx'
+  ip6r:      IPv6 range '#-#' or '#/#' or '#'
+  ipaddress: IPv4 or IPv6 address
+  iprange:   IPv4 or IPv6 range
+ .
+ While PostgreSQL already has built-in types 'inet' and 'cidr', the
+ authors of this module found that they had a number of requirements
+ that were not addressed by the built-in types.
+
 Package: python-pylons
 Source: pylons
 Version: 1.0-1
