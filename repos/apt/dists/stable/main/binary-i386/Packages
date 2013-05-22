@@ -17,18 +17,18 @@ Description: Neat IP Address Planner
 
 Package: nipap-common
 Source: nipap
-Version: 0.18.0-1
+Version: 0.18.1-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
-Installed-Size: 192
-Depends: python (>= 2.4), python-twisted-web, python-pysqlite2, python-ldap, python-ipy
+Installed-Size: 239
+Depends: python (>= 2.7), python-twisted-web, python-pysqlite2, python-ldap, python-ipy
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipap-common_0.18.0-1_all.deb
-Size: 42408
-SHA256: e7b7174655578d8c3843f05dd7e62c09c946a30409bc303d4b193d0ec923885e
-SHA1: ce1c0eb6ed7110359b9f4c47eda7017d83985723
-MD5sum: 23c2646fba0ea666e69722d6000c4c49
+Filename: pool/main/n/nipap/nipap-common_0.18.1-1_all.deb
+Size: 42312
+SHA256: a9c84ad9222470b373fd95d1e26325343222796edcac4b47abc50dd51aa9c71c
+SHA1: 611a343fa89c79a4c9513050d5601524fadb7cb0
+MD5sum: 824d85b62498c48ee139405172800b64
 Description: Neat IP Address Planner
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the common libraries.
@@ -52,18 +52,18 @@ Python-Version: 2.6, 2.7
 
 Package: nipapd
 Source: nipap
-Version: 0.18.0-2
+Version: 0.18.1-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
 Installed-Size: 116
 Depends: debconf, nipap-common, python (>= 2.7), debconf (>= 0.5) | debconf-2.0, python-psycopg2, postgresql (>= 9.1), postgresql-9.1-ip4r (>= 2.0)
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipapd_0.18.0-2_all.deb
-Size: 21906
-SHA256: 06c2e466731fbc51efc5333332a37bae71ce8369ffe87a37623c39c6578a6747
-SHA1: c3b17b558ebc05913e7a0ddfcde7695b3446bd2d
-MD5sum: 5fad9a44a44659df9f517a869b108303
+Filename: pool/main/n/nipap/nipapd_0.18.1-1_all.deb
+Size: 21920
+SHA256: 234acd5b8f975f8e5372fd60cc3309b20c4c2eb5f1fe5c1325af7740f2996127
+SHA1: afeccd6c588a99c2bbe353c57ddb6dc05334f2ad
+MD5sum: ac0a8fe9997ed8fef1d957b4762b3abe
 Description: Neat IP Address Planner XML-RPC daemon
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the XML-RPC daemon.
