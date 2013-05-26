@@ -43,10 +43,9 @@ will automatically get 'python-pynipap' which is a client-side library for
 Python applications and since both the web GUI and CLI client is written in
 Python, you will need 'python-pynipap'. If you want, you can install the nipapd
 middleware on one machine and the CLI and/or web on another.</p>
-<p>Once you've picked your packages, issue apt-get install. Here we install the
-nipapd daemon and CLI client:</p>
+<p>Let's install the backend as well as the CLI and web UI:</p>
 <pre class="literal-block">
-apt-get install nipapd nipap-cli
+apt-get install nipapd nipap-cli nipap-www
 </pre>
 <p>apt-get will complain about that the packages cannot be authenticated. This is
 due to the reason that the NIPAP Debian repository is not signed. Ignore the
@@ -54,7 +53,8 @@ warning and type 'y' to continue. During installation, the nipapd package will
 ask if you want to automatically load the needed database structure and start
 nipapd on startup - answer Yes to both questions. After the installation is
 done, you will have the PostgreSQL database server and all the other necessary
-dependancies installed.</p>
+dependancies installed. Edit /etc/postgresql/9.1/main/postgresql.conf and
+change uncomment the listen_address line so that it listens to localhost.</p>
 </div>
 <div class="section" id="cli-configuration">
 <h1>CLI configuration</h1>
