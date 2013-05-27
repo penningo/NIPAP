@@ -20,7 +20,7 @@ build process, this has yet to happen.</p>
 <h1>Debian installation</h1>
 <p>Add the NIPAP repo to your package sources and update your lists:</p>
 <pre class="literal-block">
-echo &quot;deb http://spritelink.github.com/NIPAP/repos/apt stable main extra&quot; &gt; /etc/apt/sources.list.d/nipap.list
+echo &quot;deb http://spritelink.github.io/NIPAP/repos/apt stable main extra&quot; &gt; /etc/apt/sources.list.d/nipap.list
 apt-get update
 </pre>
 <p>There are now five new nipap related packages:</p>
@@ -115,7 +115,7 @@ nipap-passwd -a *username* -p *password* -n 'NIPAP web UI' -t
 is a user which can authenticate against nipapd using one username but log all
 changes as made by another user. See the docs for the NIPAP authentication
 library for more information about this:
-<a class="reference external" href="http://spritelink.github.com/NIPAP/nipap/authlib.html">http://spritelink.github.com/NIPAP/nipap/authlib.html</a></p>
+<a class="reference external" href="http://spritelink.github.io/NIPAP/nipap/authlib.html">http://spritelink.github.io/NIPAP/nipap/authlib.html</a></p>
 <p>Now we need to configure the web UI with the URI to the nipapd server. Edit
 /etc/nipap/nipap.conf and set the option 'xmlrpc_uri' under the section
 '[www]'. The URI should have the form
