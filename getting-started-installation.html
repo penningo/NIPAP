@@ -62,18 +62,20 @@ uncomment the listen_address line so that it listens to localhost.</p>
 command, 'nipap', is available to you. It reads .nipaprc in your home directory
 and expects to find things like the host address of nipapd and the
 authentication credentials.</p>
-<p>Create a new used in the local authentication database for the CLI:</p>
+<p>Create a new user in the local authentication database for the CLI:</p>
 <pre class="literal-block">
-nipap-passwd -a cli -p secret -n "My CLI user"
+nipap-passwd -a *username* -p *username* -n "My CLI user"
 </pre>
+<p>Where *username* and *password* is the username and password you wish to
+create. Use the same username and password to fill in your .nipaprc.</p>
 <p>Here's an example .nipaprc that will work towards localhost with the user
-just created: </p>
+you just created: </p>
 <pre class="literal-block">
 [global]
 hostname = localhost
 port     = 1337
-username = cli
-password = secret
+username = *username*
+password = *password*
 default_vrf = none
 </pre>
 <p>The last option sets which VRF is the default to work with if nothing
