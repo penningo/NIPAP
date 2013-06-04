@@ -8,3 +8,14 @@ Components: main extra
 Description: Official NIPAP apt repository
 Log:
  --type=dsc changelogs
+
+Origin: NIPAP
+Label: NIPAP
+Suite: testing
+Codename: testing
+Version: 3.1
+Architectures: i386 amd64 source
+Components: main extra
+Description: NIPAP testing apt repository
+Log:
+ --type=dsc changelogs
