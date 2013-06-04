@@ -14,6 +14,7 @@ all:
 	@echo "make builddeb - Generate a deb package"
 	@echo "make clean - Get rid of scratch and byte files"
 	@echo "make debrepo - Create Packages.gz file suitable for github apt repo"
+	@echo "make debrepo-testing - Create or update the testing repo"
 
 source:
 	for PROJ in $(SUBPROJ); do
@@ -46,6 +47,17 @@ ifeq ($(CURBRANCH), $(shell echo -n 'gh-pages'))
 # need to find out the proper destination filename which should be the name of
 # the built .deb file but .changes instead. Perhaps it is easier to find the
 # .deb file and figure out the .changes file from there or even extract it?
+else
+	@echo "Please switch to branch: gh-pages"
+endif
+
+debrepo-testing:
+ifeq ($(CURBRANCH), $(shell echo -n 'gh-pages'))
+	for CHANGEFILE in `ls *.changes`; do \
+		cd repos/apt; \
+		reprepro --ignore=wrongdistribution -Vb . include testing ../../$$CHANGEFILE; \
+		cd ../.. ; \
+	done
 else
 	@echo "Please switch to branch: gh-pages"
 endif
