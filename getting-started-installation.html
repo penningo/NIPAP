@@ -43,16 +43,16 @@ will automatically get 'python-pynipap' which is a client-side library for
 Python applications and since both the web GUI and CLI client is written in
 Python, you will need 'python-pynipap'. If you want, you can install the nipapd
 middleware on one machine and the CLI and/or web on another.</p>
-<p>Let's install the backend as well as the CLI and web UI:</p>
+<p>Let's install the backend:</p>
 <pre class="literal-block">
-apt-get install nipapd nipap-cli nipap-www
+apt-get install nipapd
 </pre>
 <p>apt-get will complain about that the packages cannot be authenticated. This is
-due to the reason that the NIPAP Debian repository is not signed. Ignore the
-warning and type 'y' to continue. During installation, the nipapd package will
-ask if you want to automatically load the needed database structure and start
-nipapd on startup - answer Yes to both questions. After the installation is
-done, you will have the PostgreSQL database server and all the other necessary
+due to the NIPAP Debian repository not being signed. Ignore the warning and
+type 'y' to continue. During installation, the nipapd package will ask if you
+want to automatically load the needed database structure and start nipapd on
+startup - answer Yes to both questions. After the installation is done, you
+will have the PostgreSQL database server and all the other necessary
 dependancies installed. Edit /etc/postgresql/9.1/main/postgresql.conf and
 uncomment the listen_address line so that it listens to localhost.</p>
 </div>
@@ -108,32 +108,17 @@ required for the NIPAP web UI as well as the web UI itself installed.</p>
 </div>
 <div class="section" id="configuration-of-the-web-ui">
 <h1>Configuration of the web UI</h1>
-<p>Begin by adding a user for the web interface to the local authentication
-database on the server where nipapd is running:</p>
+<p>The nipap-www package comes with an automagic configuration guide that will
+help you setup the needed user and configure it if, and only if, you are
+running nipapd on the same machine. Install nipap-www</p>
 <pre class="literal-block">
-nipap-passwd -a *username* -p *password* -n 'NIPAP web UI' -t
+apt-get install nipap-www
 </pre>
-<p>The '-t' option tells nipap-passwd to make the new user a 'trusted' user, that
-is a user which can authenticate against nipapd using one username but log all
-changes as made by another user. See the docs for the NIPAP authentication
-library for more information about this:
-<a class="reference external" href="http://spritelink.github.io/NIPAP/nipap/authlib.html">http://spritelink.github.io/NIPAP/nipap/authlib.html</a></p>
-<p>Now we need to configure the web UI with the URI to the nipapd server. Edit
-/etc/nipap/nipap.conf and set the option 'xmlrpc_uri' under the section
-'[www]'. The URI should have the form
-'<a class="reference external" href="http://">http://</a><em>username</em>:<em>password*&#64;*address</em>:<em>port</em>', for example
-'<a class="reference external" href="http://www:secret&#64;127.0.0.1:9000">http://www:secret&#64;127.0.0.1:9000</a>' to connect to nipapd running on the local
-machine (127.0.0.1) listening on port 9000 and authenticate with the username
-'www' and password 'secret'.</p>
-<p>For authentication, the NIPAP web UI uses the same authentication library and
-settings as nipapd. That means, if they are running on the same machine they by
-default use the same authentication database and the users can use the same
-credentials for the web UI as for the backend. If they are not running on the
-same machine, there will be two separate authentication databases; one for the
-XML-RPC backend and one for the web UI.  Thus the web users needs to be added
-on the machine where the web UI is running as well, using the 'nipap-passwd'
-command as described above. These users does not need to be 'trusted' as above
-though, so skip the '-t' option.</p>
+<p>When you are asked whether you want to add a user automatically and
+configure it, answer yes. You should now be done. If you tried to install
+nipap-www at the same time as nipapd, you might not be prompted with the
+question to automatically add a user. Try doing 'dpkg-reconfigure nipap-www' in
+that case.</p>
 </div>
 <div class="section" id="serving-the-web-ui">
 <h1>Serving the web UI</h1>
