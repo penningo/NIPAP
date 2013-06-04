@@ -89,25 +89,8 @@ nipap address add prefix 192.0.2.0/24 type assignment description &quot;test pre
 nipap address list 0/0
 </pre>
 </div>
-<div class="section" id="installation-of-the-web-ui">
-<h1>Installation of the web UI</h1>
-<p>The NIPAP web UI performs all operations through the NIPAP XML-RPC API served
-by nipapd, which means they do not need to be installed on the same machine. It
-is built on the Pylons web framework and requires Pylons version &gt;= 1.0. This
-version has unfortunately not yet made it into neither the Debian nor the
-Ubuntu official repositories yet. For you lycky enough to run an apt-based
-distribution, there is a Pylons 1.0 package in the NIPAP 'extra' repository
-which should work on any apt-based system running python 2.5, 2.6 or 2.7.  See
-how to enable the 'extra' repo under the ip4r-section above. With the 'extra'
-repository enabled, the NIPAP web UI is installed using the following command:</p>
-<pre class="literal-block">
-apt-get install nipap-www
-</pre>
-<p>When apt-get has completed the installation, you should have all dependencies
-required for the NIPAP web UI as well as the web UI itself installed.</p>
-</div>
 <div class="section" id="configuration-of-the-web-ui">
-<h1>Configuration of the web UI</h1>
+<h1>Installation and configuration of the web UI</h1>
 <p>The nipap-www package comes with an automagic configuration guide that will
 help you setup the needed user and configure it if, and only if, you are
 running nipapd on the same machine. Install nipap-www</p>
