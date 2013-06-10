@@ -17,18 +17,18 @@ Description: Neat IP Address Planner
 
 Package: nipap-common
 Source: nipap
-Version: 0.20.0-1
+Version: 0.20.1-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
 Installed-Size: 192
 Depends: python (>= 2.7), python-twisted-web, python-pysqlite2, python-ldap, python-ipy
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipap-common_0.20.0-1_all.deb
-Size: 43324
-SHA256: 5a3d9812491b80b15080d0fa01c095fdba90426e76cfbc7a29a6a337d04719b0
-SHA1: 21ce86a24181d0e73071f5302ad5016aa44a553b
-MD5sum: f166c6c171fa9304073a8c8c0aa347f8
+Filename: pool/main/n/nipap/nipap-common_0.20.1-1_all.deb
+Size: 43124
+SHA256: 346893ca74871b78fc17b03d4633b480b4999311b103dfafa41570e87e5a9378
+SHA1: d79c96ae64c5a7cacc1ed7c04191ca266019cddd
+MD5sum: ba92b7346f7b8ca01b516ab57c50804b
 Description: Neat IP Address Planner
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the common libraries.
@@ -52,18 +52,18 @@ Python-Version: 2.7
 
 Package: nipapd
 Source: nipap
-Version: 0.20.0-1
+Version: 0.20.1-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
 Installed-Size: 56
 Depends: debconf, nipap-common, python (>= 2.7), debconf (>= 0.5) | debconf-2.0, python-psycopg2, postgresql (>= 9.1), postgresql-9.1-ip4r (>= 2.0)
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipapd_0.20.0-1_all.deb
-Size: 23346
-SHA256: 943669d87f1138380ff423b343d67cbe16ede2e0a4f18bbc16422ee482e76515
-SHA1: 1e668ab3a3431d29cb87e9e2c884a59167b75987
-MD5sum: cb8a90c3608013cff451c0729f161ab6
+Filename: pool/main/n/nipap/nipapd_0.20.1-1_all.deb
+Size: 23358
+SHA256: 86ce5f104b9a7ead990ae17e3d02cd6170ffb9ef1920d40af7667d995ceb30a4
+SHA1: a685e97767da23573f9ff3d55ba7f1491817d8ec
+MD5sum: 2d99792dd139e32b447c1e944feb1834
 Description: Neat IP Address Planner XML-RPC daemon
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the XML-RPC daemon.
