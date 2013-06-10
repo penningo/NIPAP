@@ -17,18 +17,18 @@ Description: Neat IP Address Planner
 
 Package: nipap-common
 Source: nipap
-Version: 0.20.1-1
+Version: 0.20.2-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
-Installed-Size: 192
+Installed-Size: 191
 Depends: python (>= 2.7), python-twisted-web, python-pysqlite2, python-ldap, python-ipy
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipap-common_0.20.1-1_all.deb
-Size: 43124
-SHA256: 346893ca74871b78fc17b03d4633b480b4999311b103dfafa41570e87e5a9378
-SHA1: d79c96ae64c5a7cacc1ed7c04191ca266019cddd
-MD5sum: ba92b7346f7b8ca01b516ab57c50804b
+Filename: pool/main/n/nipap/nipap-common_0.20.2-1_all.deb
+Size: 43060
+SHA256: 54a1e0bb09f6ff61fb937f9d8e65f7cf9e99cf49a90a11b34edb5d1c86fe9e89
+SHA1: 794656e77902debd9cd2b3b26fa8478438ac0b1b
+MD5sum: 3616423afd0ee051fa8c2c6c6be3a41b
 Description: Neat IP Address Planner
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the common libraries.
@@ -52,18 +52,18 @@ Python-Version: 2.7
 
 Package: nipapd
 Source: nipap
-Version: 0.20.1-1
+Version: 0.20.2-1
 Architecture: all
 Maintainer: Lukas Garberg <lukas@spritelink.net>
-Installed-Size: 56
+Installed-Size: 57
 Depends: debconf, nipap-common, python (>= 2.7), debconf (>= 0.5) | debconf-2.0, python-psycopg2, postgresql (>= 9.1), postgresql-9.1-ip4r (>= 2.0)
 Priority: optional
 Section: python
-Filename: pool/main/n/nipap/nipapd_0.20.1-1_all.deb
-Size: 23358
-SHA256: 86ce5f104b9a7ead990ae17e3d02cd6170ffb9ef1920d40af7667d995ceb30a4
-SHA1: a685e97767da23573f9ff3d55ba7f1491817d8ec
-MD5sum: 2d99792dd139e32b447c1e944feb1834
+Filename: pool/main/n/nipap/nipapd_0.20.2-1_all.deb
+Size: 23450
+SHA256: 186bce39aff2752a1fd8b653509d3810293ddbd54a0ff912664fe591e75f33a7
+SHA1: d1f9fb7b022dd9a5ff2045dc415f1bf2f2c58844
+MD5sum: d8689445a659a02d71fa340c04ab67d0
 Description: Neat IP Address Planner XML-RPC daemon
  The Neat IP Address Planner, NIPAP, is a system built for efficiently managing
  large amounts of IP addresses. This is the XML-RPC daemon.
