@@ -2,7 +2,6 @@ language: python
 python:
   - 2.7
 
-# do the SQL cakewalk
 before_install:
     # we use our debian repo to get ip4r
     - echo "deb http://spritelink.github.io/NIPAP/repos/apt stable main extra" | sudo tee /etc/apt/sources.list.d/nipap.list
@@ -11,17 +10,18 @@ before_install:
     - sudo apt-get install -qq -y --force-yes devscripts python-docutils
     - make builddeb
     # install dependencies for installing & running nipap
-    - sudo apt-get install -qq -y --force-yes python-pysqlite2 python-twisted-web python-psycopg2 python-ipy python-ldap python-docutils postgresql-9.1-ip4r
+    - sudo apt-get install -qq -y --force-yes python-pysqlite2 python-twisted-web python-psycopg2 python-ipy python-ldap python-docutils postgresql-9.1-ip4r python-tornado python-flask
     # install the newly built nipap packages
     - sudo dpkg -i nipap*.deb python-pynipap*.deb
     # populate answers to nipapd package install questions and reconfigure
     - echo "set nipapd/autoconf true" | sudo debconf-communicate
     - echo "set nipapd/startup true" | sudo debconf-communicate
     - sudo dpkg-reconfigure nipapd
+    - sudo pypi-install Flask-XML-RPC
 
 # get the python stuff installed
 install:
-    - pip install --use-mirrors psycopg2 ipy twisted python-ldap pysqlite pyasn1
+    - pip install --use-mirrors psycopg2 ipy twisted python-ldap pysqlite pyasn1 Flask Flask-XML-RPC tornado
     - sudo make install
     - sudo cp nipap/nipap.conf.dist /etc/nipap/nipap.conf
     - sudo cp nipap/local_auth.db /etc/nipap/
