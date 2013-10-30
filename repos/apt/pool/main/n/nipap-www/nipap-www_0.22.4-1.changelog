@@ -1,4 +1,47 @@
-nipap-cli (0.21.0-1) precise; urgency=low
+nipap-www (0.22.4-1) stable; urgency=low
+
+  * Added more usage examples to NIPAP CLI man page
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 30 Oct 2013 15:05:37 +0100
+
+nipap-www (0.22.3-1) stable; urgency=low
+
+  * Bugfix in edit_prefix API function
+
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 30 Oct 2013 12:24:26 +0100
+
+nipap-www (0.22.1-1) precise; urgency=low
+
+  * Fix debian repo build issue
+
+ -- Kristian Larsson <kll@spritelink.net>  Wed, 25 Sep 2013 09:50:42 +0200
+
+nipap-www (0.22.0-1) precise; urgency=low
+
+  * Add support for Tags. Prefixes can be tagged with a tag for easier searching
+    and categorisation of prefixes.
+  * Add VLAN attributes to prefixes. There are no constraints on the VLAN
+    attribute apart from being an integer.
+  * The Web UI now displays "top level" prefixes on empty search. This means it
+    is typically easier to get an overview of addresses.
+  * CLI automatically adjusts column width for better rendering of wide
+    prefixes, ie typically IPv6.
+  * CLI tab completion has been fixed for entries needing escaping (such as
+    those containing a space).
+  * Web UI has improved support for going back & forward in prefix list.
+  * Bug fix to 'nipap address view' which could previously display the wrong
+    prefix under certain conditions.
+  * Add timestamp value for when prefix was added and last modified. These
+    values are available over the XML-RPC API and can be used as a filter to
+    only get prefixes modified since timestamp X which could ease integration
+    with external systems which need to stay in sync with NIPAP.
+  * Fix in debian/postinst to make www user trusted on install.
+  * Improve defaults in .nipaprc skeleton file.
+  * Various internal small fixes / refactoring.
+
+ -- Kristian Larsson <kll@spritelink.net>  Sun, 22 Sep 2013 13:17:30 +0200
+
+nipap-www (0.21.0-1) precise; urgency=low
 
   * CLI now supports pool resizing, ie growing or shrinking a pool by the
     addition or removal of member prefixes. Code by Kai Storbeck <kai@xs4all.nl>
@@ -16,9 +59,16 @@ nipap-cli (0.21.0-1) precise; urgency=low
   * Fix rendering bug in web UI
   * There is now a small unit test for the CLI
 
- -- Kristian Larsson <kll@spritelink.net>  Tue, 02 Jul 2013 14:01:07 +0200
+ -- Kristian Larsson <kll@spritelink.net>  Tue, 02 Jul 2013 14:01:25 +0200
 
-nipap-cli (0.20.0-1) precise; urgency=low
+nipap-www (0.20.2) precise; urgency=low
+
+  * Fix for nipapd postinst and init script related to the pid file
+  * Fix web UI bug where more results would not be automatically fetched
+
+ -- Kristian Larsson <kll@spritelink.net>  Thu, 20 Jun 2013 13:32:06 +0200
+
+nipap-www (0.20.0-1) precise; urgency=low
 
   * For Debian, nipapd now runs per default as the nipap user which
     allows nipapd to connect to PostgreSQL via a UNIX socket instead of over
@@ -32,9 +82,9 @@ nipap-cli (0.20.0-1) precise; urgency=low
   * Added prefix help on more pages in the web UI
   * Fix for VRF tab completion
 
- -- Kristian Larsson <kll@spritelink.net>  Mon, 10 Jun 2013 12:32:53 +0200
+ -- Kristian Larsson <kll@spritelink.net>  Mon, 10 Jun 2013 12:31:40 +0200
 
-nipap-cli (0.19.0-1) precise; urgency=low
+nipap-www (0.19.0-1) precise; urgency=low
 
   * nipapd now requires postgresql-9.1 for apt package installation as well as
     postgresql-9.1-ip4r >= 2.0, which is available from the official NIPAP repo
@@ -49,18 +99,18 @@ nipap-cli (0.19.0-1) precise; urgency=low
   * Some updates to Java client library
   * Various other small fixes
 
- -- Kristian Larsson <kll@lingloi320.tele2.net>  Tue, 04 Jun 2013 16:21:49 +0200
+ -- Kristian Larsson <kll@lingloi320.tele2.net>  Tue, 04 Jun 2013 16:13:56 +0200
 
-nipap-cli (0.18.0-1) stable; urgency=low
+nipap-www (0.18.0-1) stable; urgency=low
 
   * Constraints for country code added to database backend
   * Added LICENSE file
   * Various smaller improvements to WWW UI and CLI client
   * Version information reachable from CLI and web UI
 
- -- Lukas Garberg <lukas@spritelink.net>  Fri, 03 May 2013 13:43:40 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Fri, 03 May 2013 13:44:31 +0200
 
-nipap-cli (0.17.0-1) stable; urgency=low
+nipap-www (0.17.0-1) stable; urgency=low
 
   * NIPAP backend now returns full object instead of only ID after add_* and
     edit_* operations
@@ -70,15 +120,15 @@ nipap-cli (0.17.0-1) stable; urgency=low
   * Various improvements to web UI and CLI, including fixing a few
     bugs/annoyances
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 10 Apr 2013 09:07:33 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 10 Apr 2013 09:08:12 +0200
 
-nipap-cli (0.16.1-1) stable; urgency=low
+nipap-www (0.16.1-1) stable; urgency=low
 
   * Fix: Currently selected VRFs now shown in VRF selector (again)
 
- -- Lukas Garberg <lukas@spritelink.net>  Tue, 09 Apr 2013 22:23:57 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Tue, 09 Apr 2013 22:25:21 +0200
 
-nipap-cli (0.16.0-1) stable; urgency=low
+nipap-www (0.16.0-1) stable; urgency=low
 
   * Fix: from-prefix was completely broken in 0.15.0 and is now working again
   * Fix: pretty bad backend bug that didn't correctly order results rendering
@@ -98,9 +148,9 @@ nipap-cli (0.16.0-1) stable; urgency=low
   * Various small CLI and WWW UI bug fixes
   * NIPAP is now checked by Travis-CI - quality++
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 28 Feb 2013 22:47:59 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 28 Feb 2013 22:48:56 +0100
 
-nipap-cli (0.15.0-1) stable; urgency=low
+nipap-www (0.15.0-1) stable; urgency=low
 
   * Improve bfcache support
   * All prefixes in a pool must now be in the same VRF (database check)
@@ -110,45 +160,45 @@ nipap-cli (0.15.0-1) stable; urgency=low
     type of the prefix
   * Various small CLI and WWW UI bug fixes
 
- -- Lukas Garberg <lukas@spritelink.net>  Tue, 12 Feb 2013 14:30:27 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Tue, 12 Feb 2013 17:29:35 +0100
 
-nipap-cli (0.14.0-1) stable; urgency=low
+nipap-www (0.14.0-1) stable; urgency=low
 
   * Varous fixes to the CLI client
   * Authoritative source honored in CLI client and web UI
   * Feature parity in smart_search_* API functions
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 17 Jan 2013 21:21:33 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 17 Jan 2013 21:22:12 +0100
 
-nipap-cli (0.13.0-1) stable; urgency=low
+nipap-www (0.13.0-1) stable; urgency=low
 
   * Added recursive option to prefix remove function in CLI client
   * Lots of smaller fixes to CLI client
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 10 Jan 2013 10:47:05 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 10 Jan 2013 10:47:48 +0100
 
-nipap-cli (0.12.0-1) stable; urgency=low
+nipap-www (0.12.0-1) stable; urgency=low
 
   * VRF RT now verified; must match xx:yy or x.y.z.x:aa
   * VRF RT:s now sorted as one would expect
   * Various bugfixes
 
- -- Lukas Garberg <lukas@spritelink.net>  Tue, 23 Oct 2012 16:41:15 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Tue, 23 Oct 2012 16:41:52 +0200
 
-nipap-cli (0.11.1-1) stable; urgency=low
+nipap-www (0.11.1-1) stable; urgency=low
 
   * Bugfix; limit prefix search to VRF now works and is fast
   * NIPAP cli now works in Python < 2.7
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 10 Oct 2012 09:38:51 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 10 Oct 2012 09:39:34 +0200
 
-nipap-cli (0.11.0-1) stable; urgency=low
+nipap-www (0.11.0-1) stable; urgency=low
 
   * Schemas removed from NIPAP and replaced with VRFs
 
- -- Lukas Garberg <lukas@spritelink.net>  Mon, 08 Oct 2012 01:16:56 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Mon, 08 Oct 2012 01:17:41 +0200
 
-nipap-cli (0.10.0-1) stable; urgency=low
+nipap-www (0.10.0-1) stable; urgency=low
 
   * Added a fancy floating header to the prefix search page
   * Improved tab completion, now handles entries containing space
@@ -159,17 +209,17 @@ nipap-cli (0.10.0-1) stable; urgency=low
   * Improved handling of authentication errors
   * Improved automatic scrolling in web UI
 
- -- Lukas Garberg <lukas@spritelink.net>  Mon, 06 Aug 2012 15:05:45 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Mon, 06 Aug 2012 15:06:24 +0200
 
-nipap-cli (0.9.0-1) stable; urgency=low
+nipap-www (0.9.0-1) stable; urgency=low
 
   * Add ability to show a custom welcome message on web UI login page
   * Simplify loading of NIPAP SQL structure
   * Vastly improve installation documentation
 
- -- Lukas Garberg <lukas@spritelink.net>  Mon, 30 Jul 2012 14:56:22 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Mon, 30 Jul 2012 14:56:57 +0200
 
-nipap-cli (0.8.0-1) stable; urgency=low
+nipap-www (0.8.0-1) stable; urgency=low
 
   * Bug in database inconsistency checks fixed
   * Regexp search improved; '.*' will now also match NULL values, which is
@@ -178,9 +228,9 @@ nipap-cli (0.8.0-1) stable; urgency=low
   * Prefix type can now, in certain cases, be changed from web UI and CLI
     application.
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Jul 2012 12:44:33 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Jul 2012 12:46:18 +0200
 
-nipap-cli (0.7.0-1) UNRELEASED; urgency=low
+nipap-www (0.7.0-1) UNRELEASED; urgency=low
 
   * Fix; Rendering of prefix list in web UI improvements
   * CLI tab completion improvements
@@ -196,41 +246,53 @@ nipap-cli (0.7.0-1) UNRELEASED; urgency=low
   * Fix; find_free_prefix now handles /31s and /127 correctly
   * Vastly improve find_free_prefix lookup speed, relevant for IPv6
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 25 Jul 2012 13:37:39 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Wed, 25 Jul 2012 13:35:10 +0200
 
-nipap-cli (0.2.0-1) UNRELEASED; urgency=low
+nipap-www (0.6.1dev-1) oneiric; urgency=low
+
+  * Bugfix; prefix alarm priority can now be set.
+  * Added VRF prefix attribute to prefix list.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 31 May 2012 11:52:28 +0200
+
+nipap-www (0.6.0dev-1) oneiric; urgency=low
 
   * Added VRF attribute to prefixes.
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Apr 2012 09:01:45 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 26 Apr 2012 09:03:02 +0200
 
-nipap-cli (0.1.2-1) UNRELEASED; urgency=low
+nipap-www (0.5.3dev-2) oneiric; urgency=low
+
+  * Removed session files from package.
+
+ -- Lukas Garberg <lukas@spritelink.net>  Sat, 21 Apr 2012 11:11:10 +0200
+
+nipap-www (0.5.3dev-1) oneiric; urgency=low
 
   * New upstream version.
 
- -- Lukas Garberg <lukas@spritelink.net>  Thu, 19 Apr 2012 14:43:13 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 19 Apr 2012 09:23:49 +0200
 
-nipap-cli (0.1.1-1) UNRELEASED; urgency=low
+nipap-www (0.5.2dev-1) oneiric; urgency=low
 
   * New upstream version.
 
- -- Lukas Garberg <lukas@spritelink.net>  Sun, 25 Mar 2012 22:01:15 +0200
+ -- Lukas Garberg <lukas@spritelink.net>  Thu, 29 Mar 2012 10:35:07 +0200
 
-nipap-cli (0.1.0-3) UNRELEASED; urgency=low
+nipap-www (0.5.1dev-1) oneiric; urgency=low
 
-  * Replaced ${python:Depends} in dependencies with python (>= 2.4)
-    for compatibility.
+  * New upstream version.
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 12:52:58 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Tue, 08 Nov 2011 13:45:38 +0100
 
-nipap-cli (0.1.0-2) UNRELEASED; urgency=low
+nipap-www (0.5.0dev-2) natty; urgency=low
 
-  * Modifications...
+  * Various smaller changes...
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 10:10:04 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Mon, 31 Oct 2011 17:32:18 +0100
 
-nipap-cli (0.1.0-1) UNRELEASED; urgency=low
+nipap-www (0.5.0dev-1) unstable; urgency=low
 
   * Initial release.
 
- -- Lukas Garberg <lukas@spritelink.net>  Wed, 29 Feb 2012 08:59:10 +0100
+ -- Lukas Garberg <lukas@spritelink.net>  Tue, 25 Oct 2011 16:17:57 +0200
